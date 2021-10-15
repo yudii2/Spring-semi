@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.kh.spring.mybatis.mybatisMapper">	<!-- unique한 name지정 -->
+  	<select id="selectPasswordByUserId" resultType = "string">
+  		select password from member where user_id = #{userId}
+  	</select>
+  	<select id="selectMemberById" resultType="Member">	<!-- 사용자 지정 typealias -->
+  		select * from member where user_id = #{userId}
+  	</select>
+  	<select id="selectRentAndMemberById" resultType="map">	<!-- java.util.Map의 별칭 -->
+  		select * 
+  		from member 
+  		inner join rent_master using(user_id)
+  		where user_id = #{userId} 
+  	</select>
+  	
+  	<resultMap type="map" id="rentData">	<!-- 쿼리문 실행 태그가 아닌 resultMap="rentData"에 해당하는 결과값에 대한 template을 구성하는 태그 -->
+  	<!-- 
+  		column : map에 담을 컬럼명
+  		javaType : map에 담을 때 어떤 타입의 데이터로 저장할 지를 결정
+  		property : map에 담을 때 사용할 키값 (db의 스네이크표기법이 아닌 java의 카멜케이스로 담고자 할 때)
+  	
+  	 -->
+  	 	<result column="user_id" javaType="string" property="userId"/>
+  	 	<result column="title" javaType="string"/>		<!-- 컬럼명을 변경해 사용하지 않을 거라면 property 생략 -->
+  	 	<result column="rent_book_cnt" javaType="int" property="rentBookCnt"/>
+  	 	<result column="rm_idx" javaType="string" property="rmIdx"/>
+  	 	<result column="reg_date" javaType="date" property="regDate"/>
+  	 	<result column="rb_idx" javaType="string" property="rbIdx"/>
+  	 	<result column="bk_idx" javaType="string" property="bkIdx"/>
+  	</resultMap>
+  	<select id="selectRentDataById" resultMap="rentData">
+  		select user_id,title,rent_book_cnt,rm_idx,rm.reg_date,rb_idx,bk_idx
+  		from rent_master rm
+  		inner join member using(user_id) 
+  		inner join rent_book using(rm_idx) 
+  		where user_id = #{userId}
+  	</select>
+  	
+  	<insert id="insertWithDTO">
+  		insert into member (user_id,password,tell,email)
+  		values(#{userId},#{password},#{tell},#{email})
+  	</insert>
+  	
+  	<insert id="insertWithMap">
+  		insert into rent_master(rm_idx,user_id,title,rent_book_cnt)
+  		values(sc_rm_idx.nextval,#{member.userId},#{title},#{rentBookCnt})				<!-- Map의 key를 호출해 value를 부르거나, Object 저장 후 key.속성명을 사용해 특정값만 불러오기 -->
+  	</insert>
+  	
+  	<delete id="delete">
+  		delete from rent_master where user_id = #{userId}
+  	</delete>
+  	
+  	<update id="update">
+  		update member
+  		set password = #{password}
+  		where user_id = #{userId}
+  	</update>
+  	
+  	<!-- 
+  		마이바티스의 기본 statement 객체는 PreparedStatement를 사용한다.
+  		다른 statement를 사용해야 할 경우 statementType 속성을 사용해 변경이 가능하다.
+  		STATEMENT, PREPARED, CALLABLE
+  	 -->
+  	<insert id="procedure" statementType="CALLABLE">
+  		{call sp_rent_extend(#{rbIdx, mode=IN})}	<!-- 매개변수가 IN인지, OUT인지 INOUT인지 적어주어야 함 -->
+  	</insert>
+  	
+  	<!-- 퀴즈 -->
+  	<insert id="test01">
+  		insert into book (title,author,bk_idx)
+  		values(#{title},#{author},sc_bk_idx.nextval)
+  	</insert>
+  	<update id="test02">
+  		update rent_book
+  		set extension_cnt = 0
+  		where extension_cnt >= ${extensionCnt}
+  	</update>
+  	<delete id="test03">
+  		delete from member
+  		where reg_date &lt; '2021/10/01'		<!-- 부등호 &lt; &lte; &gt; &gte -->
+  		and reg_date > '2021/09/01'
+  	</delete>
+  	<select id="test04" resultType="map">
+  		select * 
+  		from (select ROWNUM, b.* from book b 
+  			order by rent_cnt DESC)
+  		where ROWNUM <![CDATA[ < ]]> 4
+  	</select>
+  </mapper>
