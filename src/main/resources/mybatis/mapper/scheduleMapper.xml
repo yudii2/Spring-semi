@@ -17,7 +17,7 @@
   	</resultMap>
   	
   	<select id="selectParticipants" resultType="map">
-  		select M.user_id as userId, nickname, info from participant_list L 
+  		select M.user_id as userId, nickname, info ,profile from participant_list L 
   		inner join participant_history H using(pl_idx)
   		inner join member M on H.user_id = M.user_id
   		where L.sc_idx = #{scIdx}

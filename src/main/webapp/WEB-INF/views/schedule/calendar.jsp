@@ -173,7 +173,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             } */
         });
-       	console.log(schedule);
        	
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -208,14 +207,16 @@ document.addEventListener('DOMContentLoaded', function() {
                      contentType:"application/json; charset=utf-8",
                      async:false,
                      success:function(json){
-                         /* console.log(json); */   
+                    	 console.dir(json.user);
+                    	 
                          var sh = json.schedule;
                          var pa = json.participants; 
                          if(sh){
+                        	 console.dir(sh);
                             // 받아온 schedule 정보를 모달에 등록한다.
 	                         $('#tit_schedule').text(sh.mountainName);
 	                         $('#tit_content').text(sh.info);
-	                         $('#dDay').text(sh.dDay);
+	                         $('#dDay').text(sh.dday);
 	                         $('#mointainName').text(sh.mountainName);
 	                         $('#allowedNum').text(sh.allowedNum);
 	                         $('#openChat').text(sh.openChat);
@@ -233,13 +234,13 @@ document.addEventListener('DOMContentLoaded', function() {
 		
 		                           //클래스 <div class="desc_user"> 추가
 		                           console.dir(pa[i]);
-		                           if(pa[i].profile == 'undefined' || pa[i].profile == 'null' ){											/* onerror="onErrorImage(this) */
-		                               top += ' <div class="parti partii"><img src="/resources/img/user.png" alt=""><span>'+ pa[i].nickname + '</span></div>'
-		                               bottom += '<div class="desc_user desc_uuser"><img src="/resources/img/user.png" alt=""><div class="info"><h1>'+pa[i].nickname+'</h1><span>'+pa[i].info+'</span></div></div>';
+		                           if(pa[i].PROFILE == 'undefined' || pa[i].PROFILE == 'null' ){											/* onerror="onErrorImage(this) */
+		                               top += ' <div class="parti partii"><img src="/resources/img/user.png" alt="/resources/img/user.png"><span>'+ pa[i].NICKNAME + '</span></div>'
+		                               bottom += '<div class="desc_user desc_uuser"><img src="/resources/img/user.png" alt="/resources/img/user.png"><div class="info"><h1>'+pa[i].NICKNAME+'</h1><span>'+pa[i].INFO+'</span></div></div>';
 		
 		                           }else{
-		                               top += ' <div class="parti partii"><img src="http://localhost:7070/file/' + pa[i].profile + '"alt=""><span>'+ pa[i].nickname + '</span></div>';                               
-		                               bottom += '<div class="desc_user desc_uuser"><img src="http://localhost:7070/file/' + pa[i].profile + '" alt=""><div class="info"><h1>'+pa[i].nickname+'</h1><span>'+pa[i].info+'</span></div></div>';
+		                               top += ' <div class="parti partii"><img src="http://localhost:7070/file/' + pa[i].PROFILE + '"alt="/resources/img/user.png"><span>'+ pa[i].NICKNAME + '</span></div>';                               
+		                               bottom += '<div class="desc_user desc_uuser"><img src="http://localhost:7070/file/' + pa[i].PROFILE + '" alt="/resources/img/user.png"><div class="info"><h1>'+pa[i].NICKNAME+'</h1><span>'+pa[i].INFO+'</span></div></div>';
 		
 		                           }
                                }
@@ -248,12 +249,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             }  
                              
                              // 접속 사용자와 작성자가 동일하면 버튼을 노출하고, 아니면 숨긴다
-                             if(!json.userIdx){
+                             if(!json.user){
                                   $('#btnNotHost').hide();
                                   $('#btnHost').hide();
                                    return;
                              }
-                             if(json.userIdx.userId == sh.userId){
+                             if(json.user.userId == sh.userId){
                                	 $('#btnNotHost').hide();
                                  $('#btnHost').show();
                              } else {   //호스트가 아닐때

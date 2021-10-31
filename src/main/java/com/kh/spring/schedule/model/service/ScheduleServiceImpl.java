@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.kh.spring.member.model.dto.Member;
 import com.kh.spring.schedule.model.dto.Schedule;
 import com.kh.spring.schedule.model.repository.ScheduleRepository;
 
@@ -27,13 +28,13 @@ public class ScheduleServiceImpl implements ScheduleService{
 	}
 
 	@Override
-	public Map<String, Object> selectScheduleDetail(String scIdx) {
+	public Map<String, Object> selectScheduleDetail(String scIdx, Member member) {
 		List<Map<String,Object>> participants = new ArrayList<Map<String,Object>>();
 		
 		Schedule scheduleByIdx = scheduleRepository.selectSchedule(scIdx);
 		participants = scheduleRepository.selectParticipants(scIdx);
 				
-		return Map.of("participants", participants, "schedule", scheduleByIdx);
+		return Map.of("participants", participants, "schedule", scheduleByIdx,"user",member);
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.kh.spring.schedule.controller;
 
 import java.text.DateFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,10 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kh.spring.member.model.dto.Member;
 import com.kh.spring.schedule.model.dto.Schedule;
 import com.kh.spring.schedule.model.service.ScheduleService;
 
@@ -52,18 +55,23 @@ public class ScheduleController {
 
 	}
 	
-	@PostMapping("schedule-detail")
-	public String scheduleDetail(@RequestBody String json) throws JsonMappingException, JsonProcessingException {
+	@PostMapping(value = "schedule-detail",produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String scheduleDetail(@RequestBody String json
+									,@SessionAttribute(value="authentication", required = false) Member member) throws JsonMappingException, JsonProcessingException {
 				
 		ObjectMapper mapper = new ObjectMapper();
 		Schedule scheduleObj = mapper.readValue(json, Schedule.class);
 		
-		Map<String,Object> schedule = scheduleService.selectScheduleDetail(scheduleObj.getScIdx());
-		
+		Map<String,Object> schedule = new HashMap<String, Object>();
+		schedule = scheduleService.selectScheduleDetail(scheduleObj.getScIdx(),member);
+
 		logger.debug(schedule.get("schedule").toString());
 		logger.debug(schedule.get("participants").toString());
-		
-		return "";
+		logger.debug(schedule.get("user").toString());
+			
+		return mapper.setDateFormat(DateFormat.getDateInstance(DateFormat.MEDIUM))
+				.writeValueAsString(schedule);
 	}
 	
 

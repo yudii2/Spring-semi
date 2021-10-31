@@ -4,7 +4,9 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,11 +39,6 @@ public class ScheduleControllerTest {
 	//mock객체 : 가상환경에서 테스트할 때 테스트를 수행하는 객체
 	private MockMvc mockMvc;
 
-	// *** junit annotation
-	//@Before : 테스트 수행 전 실행될 메서드에 선언
-	//@Test	  : 테스트를 수행할 메서드
-	//@After  : 테스트 수행 후 실행될 메서드에 선언
-
 	@Before
 	public void setup() {
 		this.mockMvc = webAppContextSetup(context).build();
@@ -73,6 +70,34 @@ public class ScheduleControllerTest {
 
 		String scheduleJson = mapper.writeValueAsString(schedules);
 		logger.debug(scheduleJson);
+		
+	}
+	
+	@Test
+	public void scheduleDetailTest() {
+		Member member = new Member();
+		member.setUserId("aaa");
+		member.setPassword("1234");
+		member.setNickname("nicka");
+		
+		Schedule schedule = new Schedule();
+		schedule.setUserId("test1");
+		schedule.setDDay(new Date(20211110));
+		schedule.setMountainName("북한산");
+		schedule.setAllowedNum(5);
+		schedule.setInfo("테스트중");
+		schedule.setOpenChat("www.test.com");
+		
+		List<String> participants = new ArrayList<String>();
+		participants.add("1");
+		participants.add("2");
+		
+		Map<String,Object> scheduleObj = new HashMap<String, Object>();
+		scheduleObj = Map.of("participants", participants, "schedule", schedule);
+		scheduleObj.put("member", member);
+		
+		logger.debug(scheduleObj.get("member").toString());
+		
 		
 	}
 
