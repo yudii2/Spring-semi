@@ -1,0 +1,93 @@
+@charset "UTF-8";
+
+#search_mountain{
+	background-color : var(--point-color);
+	text-align:center;
+	color : white;  
+	font-size: 30px;
+	padding: 30px;
+} 
+
+#search_mountain h1{
+	font-size: 25px;
+	font-weight: 500;
+	padding: 15px 0 15px 0;	
+}
+ 
+.search_bar{
+	width:600px;
+	text-align:center;
+	height: 30px;
+	margin: 10px;
+	border-radius:10px;
+	border: none;
+	outline:none;
+}
+
+.loc_bnt{
+  background:green;
+  color:white;
+  border:none;
+  position:relative;
+  height:30px;
+  font-size:0.7em;
+  padding:0 2em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+  border-radius:20px;
+  margin-bottom: 20px;
+  
+}
+
+.loc_bnt:hover{
+  background:#fff;
+  color:var(--point-color);
+}
+
+.loc{
+	display: flex;
+	justify-content: space-around;
+	margin-top: 50px;
+}
+
+.arrows{
+	display: flex;
+	justify-content: space-between;
+}
+
+#loc_map{
+	width:500px;
+	height:500px;	
+    border: 1px solid #bcbcbc; 
+    float: left;
+    
+}
+.con_items{
+	display: flex;
+	
+}
+
+.mountain { 
+  width:80px;
+  height:80px; 
+  background-color : #fff;
+  box-shadow: 0 0 15px #d4d4d4;  
+  border:none;  
+  font-size:1em;
+  padding: 20px;
+  border-radius:75px;
+  text-align:center;
+  line-height: 80px;
+}
+
+.mountain_group{
+	width:500px;
+	height:500px;
+	display: grid;
+	grid-template-columns:1fr 1fr 1fr;
+	justify-content: center;
+	align-items:center;
+	line-height: 80px;
+	margin-left: 50px;
+}

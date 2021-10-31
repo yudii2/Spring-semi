@@ -1,0 +1,46 @@
+@charset "UTF-8";
+
+.check_id{
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 50px;	
+}
+.wrap_match_id{
+	width: 300px;
+	text-align: center;
+}
+
+h1{
+	padding :20px;
+	font-size:20px;
+	font-weight: 700;
+	color:var(--point-color);
+}
+.match_id{
+	height: 80px;
+	border: 1px solid #ddd;
+	margin:10px 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;	
+}
+.match_id h2{
+	font-weight: 700;
+}
+    
+.btn{
+	display:inline-block;
+    width: 300px;
+    padding:13px;
+    box-sizing:border-box;
+    background-color:var(--point-color);
+    color : #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    border:none;
+    margin:5px 0;
+}
+

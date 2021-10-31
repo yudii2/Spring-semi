@@ -2,13 +2,18 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  <mapper namespace="com.kh.spring.mybatis.mybatisMapper">	<!-- unique한 name지정 -->
-  	<select id="selectPasswordByUserId" resultType = "string">
-  		select password from member where user_id = #{userId}
-  	</select>
-  	<select id="selectMemberById" resultType="Member">	<!-- 사용자 지정 typealias -->
-  		select * from member where user_id = #{userId}
-  	</select>
+  <mapper namespace="com.kh.spring.mybatis.MybatisRepository">	<!-- unique한 name지정 -->
+  
+  <!-- 
+  		#{} vs ${}
+  		
+  		#{} : PreparedStatement에서 쿼리 템플릿을 완성 시킨 뒤에 파라미터값을 전달받아 쿼리를 완성. 
+  			문자열 escape처리를 자동으로 해준다. => SQL Injection 공격에 안전한다.
+  		  		
+  		${} : 쿼리 템플릿이 생성되는 시점에 파라미터로 전달된 값을 사용해 쿼리 템플릿을 완성시킬 때 사용하는 기호. escape처리를 안함
+  
+   -->
+  
   	<select id="selectRentAndMemberById" resultType="map">	<!-- java.util.Map의 별칭 -->
   		select * 
   		from member 
@@ -39,34 +44,144 @@
   		where user_id = #{userId}
   	</select>
   	
-  	<insert id="insertWithDTO">
-  		insert into member (user_id,password,tell,email)
-  		values(#{userId},#{password},#{tell},#{email})
-  	</insert>
+  	<resultMap type="map" id="scheduleDetail">
+ 		<result column="sc_idx" javaType="string" property="scIdx"/>
+ 		<result column="user_id" javaType="string" property="userId"/>
+ 		<result column="d_day" javaType="date" property="dDAY"/>
+ 		<result column="mountain_name" javaType="string" property="mountainName"/>
+ 		<result column="reg_date" javaType="date" property="regDate"/>
+ 		<result column="info" javaType="string"/>
+ 		<result column="allowed_num" javaType="int" property="allowedNum"/>
+ 		<result column="openchat" javaType="string" />
+ 		<result column="age" javaType="int" />
+  	</resultMap>
   	
-  	<insert id="insertWithMap">
-  		insert into rent_master(rm_idx,user_id,title,rent_book_cnt)
-  		values(sc_rm_idx.nextval,#{member.userId},#{title},#{rentBookCnt})				<!-- Map의 key를 호출해 value를 부르거나, Object 저장 후 key.속성명을 사용해 특정값만 불러오기 -->
-  	</insert>
-  	
-  	<delete id="delete">
-  		delete from rent_master where user_id = #{userId}
-  	</delete>
-  	
-  	<update id="update">
-  		update member
-  		set password = #{password}
-  		where user_id = #{userId}
-  	</update>
   	
   	<!-- 
   		마이바티스의 기본 statement 객체는 PreparedStatement를 사용한다.
   		다른 statement를 사용해야 할 경우 statementType 속성을 사용해 변경이 가능하다.
   		STATEMENT, PREPARED, CALLABLE
   	 -->
-  	<insert id="procedure" statementType="CALLABLE">
-  		{call sp_rent_extend(#{rbIdx, mode=IN})}	<!-- 매개변수가 IN인지, OUT인지 INOUT인지 적어주어야 함 -->
+<!--   	<insert id="procedure" statementType="CALLABLE">
+  		{call sp_rent_extend(#{rbIdx, mode=IN})}	매개변수가 IN인지, OUT인지 INOUT인지 적어주어야 함
   	</insert>
+  	 -->
+  	
+  	<select id="dynamicQueryIf" resultType="map">
+  		select * from book where
+  		<if test="searchType == 'info'">
+  			info like '%'||#{keyword}||'%'
+  		</if> 
+  		<if test="searchType == 'author'">
+  			author like '%'||#{keyword}||'%'
+  		</if>
+  	</select>
+  	
+  	<select id="dynamicQueryChoose" resultType="map">
+  		select * from book where
+  		<choose>
+  			<when test="searchType == 'info'">
+  				info like '%'||#{keyword}||'%'
+  			</when>
+  			<when test="searchType == 'author'">
+  				author like '%'||#{keyword}||'%'
+  			</when>
+  			<otherwise>
+  				title like '%'||#{keyword}||'%'
+  			</otherwise>
+  		</choose>
+  	</select>
+  	
+  	<select id="dynamicQueryWhereAndForeachTag" resultType="map">
+  		select * from book
+  		<where>												<!-- where태그는 where 이후 처음 등장하는 논리 연산자에 대해 알아서 무시해준다. -->
+  			<foreach collection="searchTypes" item="type">	<!-- collection=리스트 또는 배열을 의미(map에 담은 배열의 key값) -->
+  				<if test="type == 'rentable'">
+  					or book_amt > 0
+  				</if>
+  				<if test="type =='title'">
+  					and title like '%'||#{keyword}||'%'
+  				</if>
+  				<if test="type =='author'">
+  					or author like '%'||#{keyword}||'%'
+  				</if>
+  			</foreach>  		
+  		</where>
+  	</select>
+  	
+  	<select id="dynamicQueryForeachTagWithList" resultType="map">
+  		select * from member
+  		where user_id in 
+  		<foreach collection="list" item="userId" open="(" close=")" separator=",">		<!-- open/close : in('a','b','c'),  separator : forEach돌면서 구분자로 활용-->
+  			#{userId}																	<!-- map에 담은 list가 아니면 collection="list"로 입력 -->
+  		</foreach>
+  	</select>
+<!--   	
+  	<insert id="insertTemplate">
+  		insert into ${tableName}
+  		forEach의 collection에 map을 넘길 경우, index속성에 key값을 저장 -> index를 돌면서 key 정보를 가져옴
+  		<foreach collection="data" index="key" item="val" open="(" close=")" separator=",">
+  			${key}		insert into 테이블 (컬럼명,컬럼명,,,,,)
+  		</foreach>
+  		values
+  		<foreach collection="data" index="key" item="val" open="(" close=")" separator=",">
+  			#{val}
+  		</foreach>
+  	
+  	</insert> -->
+  	
+  	<insert id="insertTemplate">
+  		insert into ${tableName}
+  		<if test="primaryKey != null">	<!-- 시퀀스가 필요한 컬럼이 존재 -->
+	  		(${primaryKey.col}
+	  		<!-- forEach의 collection에 map을 넘길 경우, index속성에 key값을 저장 -> index를 돌면서 key 정보를 가져옴 -->
+	  		<foreach collection="data" index="key" item="val" open="," close=")" separator=",">
+	  			${key}		<!-- insert into 테이블 (컬럼명,컬럼명,,,,,) -->
+	  		</foreach>
+	  		values (${primaryKey.data}
+	  		<foreach collection="data" index="key" item="val" open="," close=")" separator=",">
+	  			#{val}
+	  		</foreach>  		
+  		</if>
+		<if test="primaryKey == null">	<!-- 시퀀스가 필요없는 컬럼만 존재 -->
+	  		<foreach collection="data" index="key" item="val" open="," close=")" separator=",">
+	  			${key}		<!-- insert into 테이블 (컬럼명,컬럼명,,,,,) -->
+	  		</foreach>
+	  		values
+	  		<foreach collection="data" index="key" item="val" open="," close=")" separator=",">
+	  			#{val}
+	  		</foreach>  		
+		</if>
+  	</insert>
+  	
+  	<update id="dynamicQuerySetTag">	<!-- 사용자로부터 수정할 데이터 담아 보내 update쿼리 작성 -->
+  		update member
+  		<set>
+  			<if test="password != null">
+  				password = #{password}
+  			</if>
+  			<if test="tell != null">
+  				,tell = #{tell}
+  			</if>
+  			<if test="email != null">
+  				,email = #{email}
+  			</if>			
+  		</set>
+  		where user_id = #{userId}
+  	</update>
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
   	
   	<!-- 퀴즈 -->
   	<insert id="test01">

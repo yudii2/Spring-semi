@@ -1,0 +1,177 @@
+@charset "UTF-8";
+.con_mypage{
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+}
+
+.wrap_mypage_side_menu{
+  grid-column: 1 / span 2;
+  min-height: 700px;
+}
+.tit_side_menu{
+  padding: 20px;
+  font-size: 22px;
+  font-weight: 700;
+}
+.mypage_side_menu{
+  padding: 20px;
+  background-color: #eee;
+  height: 90%;
+  box-sizing: border-box;
+}
+.mypage_side_menu li{
+  padding: 15px 0;
+}
+.tit_mypage_gnb{
+  font-size: 16px;
+}
+.tit_sub_gnb{
+  display: block;
+  padding: 10px 0 0 15px;
+  font-size: 14px;
+}
+.wrap_my_contents{
+  grid-column: 3 / -1;
+  padding: 80px;
+}
+.profile{
+  width: 100%;
+  /* border: 1px solid #000; */
+  display: flex;
+}
+.profile_img{
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-right: 70px;
+  position: relative;
+  overflow: hidden;
+}
+#target_img{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.profile_desc{
+  padding-top: 10px;
+}
+.nickname{
+  padding-bottom: 10px;
+  font-weight: 500;
+}
+.cnt{
+  font-size: 13px;
+  padding-bottom: 25px;
+  display: inline-block;
+  margin-right: 70px;
+}
+.cnt span{
+	margin-left:10px;
+}
+.info{
+  font-size: 14px;
+  display: block;
+}.wrap_tab{
+  /* display: flex; */
+  margin-top: 30px;
+  border-bottom: 1px solid #555555;
+}
+.tab_my_schedule{
+  display: inline-block;
+  padding: 8px 15px;
+  border-radius: 8px 8px 0 0;
+  font-size: 15px;
+  background-color: var(--point-color);
+  color: #fff;
+}
+
+.my_posts{
+  position: relative;
+  border:1px solid #fff;
+  
+}
+#filter{
+	position: absolute;
+	right: 0;
+	margin-top: 10px;
+	
+}
+.wrap_post{
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
+}
+.post{
+  min-height:150px;
+  display: grid;
+  grid-template-rows: repeat(5, 1fr);
+  box-shadow: 0 0 10px #d3d3d3;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.tit_schedule{
+	text-align: center;
+	grid-row : 1 / span 3;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	background: url('/resources/img/mountain.png') no-repeat 0 0;
+	background-size: 100% 100%;
+	background-color: #eee;
+}
+.tit_schedule h1{
+	color:#fff;
+	font-weight: 700;
+	text-shadow: 1px -1px 2px #000;  	
+}
+.date{
+	text-align: center;
+	grid-row : 4 / span 1;
+	line-height: 1.8em;
+}
+.hiking_info{
+	box-sizing: border-box;
+	text-align: center;
+	line-height: 1.8em;
+}
+
+.heigth{
+	display:inline-block;
+	width: 50%;
+}
+.status{
+	background-color: var(--point-color);
+	border-radius: 5px;
+	color:#fff;
+	font-size: 13px;
+	padding : 0 7px;
+}
+
+/* 등반완료시 적용할 css모습 */
+.post:nth-child(2){
+	
+	
+}
+
+.end{
+	position: absolute;
+	background-color: rgb(0,0,0,0.3);
+	width:100%;
+	height:100%;
+	text-align: center;
+	line-height:150px;
+/* 	top: 50%;
+	left: 50%;
+	transform : translate(-50%, -50%); */
+	font-size : 30px;
+	font-weight: 800;
+	color: #fff;
+}
+
+.nonSchedule{
+	position:absolute; 
+	width: 100%; 
+	text-align: center;
+}

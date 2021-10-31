@@ -30,19 +30,19 @@
 	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">	<!-- 다양한 레벨의 로그가 존재하지만 그 중, info 레벨 이상의 로그를 출력하겠다. -->
-		<level value="info" />
+		<level value="DEBUG" />
 	</logger>
 	
 	<logger name="org.springframework.beans">
-		<level value="info" />
+		<level value="DEBUG" />
 	</logger>
 	
 	<logger name="org.springframework.context">
-		<level value="info" />
+		<level value="DEBUG" />
 	</logger>
 
 	<logger name="org.springframework.web">
-		<level value="info" />
+		<level value="DEBUG" />
 	</logger>
 
 	<!-- Root Logger -->
