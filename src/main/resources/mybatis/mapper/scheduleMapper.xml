@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.kh.spring.schedule.model.repository.ScheduleRepository">
+    	
+  	<resultMap type="map" id="scheduleDetail">
+ 		<result column="sc_idx" javaType="string" property="scIdx"/>
+ 		<result column="user_id" javaType="string" property="userId"/>
+ 		<result column="d_day" javaType="date" property="dDAY"/>
+ 		<result column="mountain_name" javaType="string" property="mountainName"/>
+ 		<result column="reg_date" javaType="date" property="regDate"/>
+ 		<result column="info" javaType="string"/>
+ 		<result column="allowed_num" javaType="int" property="allowedNum"/>
+ 		<result column="openchat" javaType="string" />
+ 		<result column="age" javaType="int" />
+  	</resultMap>
+  	
+  	<select id="selectParticipants" resultType="map">
+  		select M.user_id as userId, nickname, info from participant_list L 
+  		inner join participant_history H using(pl_idx)
+  		inner join member M on H.user_id = M.user_id
+  		where L.sc_idx = #{scIdx}
+  		and H.is_leave = 0 
+  	</select>
+  
+  
+  </mapper>

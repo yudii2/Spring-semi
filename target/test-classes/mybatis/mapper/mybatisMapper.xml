@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  <mapper namespace="com.kh.spring.mybatis.MybatisRepository">	<!-- unique한 name지정 -->
+  <mapper namespace="com.kh.spring.mybatis.MybatisRepository">	<!-- unique한 name지정 !! 매퍼안에 작성된 쿼리문은 여기서 namespace로 지정한 경로로 매핑됨 -->
   
   <!-- 
   		#{} vs ${}
@@ -43,19 +43,7 @@
   		inner join rent_book using(rm_idx) 
   		where user_id = #{userId}
   	</select>
-  	
-  	<resultMap type="map" id="scheduleDetail">
- 		<result column="sc_idx" javaType="string" property="scIdx"/>
- 		<result column="user_id" javaType="string" property="userId"/>
- 		<result column="d_day" javaType="date" property="dDAY"/>
- 		<result column="mountain_name" javaType="string" property="mountainName"/>
- 		<result column="reg_date" javaType="date" property="regDate"/>
- 		<result column="info" javaType="string"/>
- 		<result column="allowed_num" javaType="int" property="allowedNum"/>
- 		<result column="openchat" javaType="string" />
- 		<result column="age" javaType="int" />
-  	</resultMap>
-  	
+
   	
   	<!-- 
   		마이바티스의 기본 statement 객체는 PreparedStatement를 사용한다.

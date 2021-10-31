@@ -9,6 +9,6 @@ public interface ScheduleService {
 
 	List<Schedule> selectAllSchedule();
 
-	Map<String, Object> selectScheduleDetail(Schedule schedule);
+	Map<String, Object> selectScheduleDetail(String scIdx);
 
 }

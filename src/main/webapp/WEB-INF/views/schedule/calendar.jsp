@@ -202,9 +202,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 $.ajax({
                      // schedule-detail로  선택한 schedule의 상세정보를 받아온다.
                      url:"/schedule/schedule-detail", 
-                     type:"get",
-                     data:{'scIdx':info.event.id},
+                     method:"POST",
+                     data: JSON.stringify({'scIdx':info.event.id}),
                      datatype:"json",
+                     contentType:"application/json; charset=utf-8",
                      async:false,
                      success:function(json){
                          /* console.log(json); */   

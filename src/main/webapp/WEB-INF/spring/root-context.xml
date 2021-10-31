@@ -16,13 +16,9 @@
 	  <property name="dataSource" ref="dataSource" />
 	  <property name="configLocation" value="classpath:mybatis/config.xml"></property>
 	</bean>
-	<!-- 	인터페이스로 사용하기
 	
-	<bean id="memberRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
-	  <property name="mapperInterface" value="com.kh.spring.member.model.repository.MemberRepository" />
-	  <property name="sqlSessionFactory" ref="sqlSessionFactory" />
-	</bean>
-	 -->
+	
+
 	<!-- 인터페이스가 아닌 mapper로 사용해보기 -->
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 	  <constructor-arg index="0" ref="sqlSessionFactory" />

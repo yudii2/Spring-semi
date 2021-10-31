@@ -8,12 +8,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.spring.schedule.model.dto.Schedule;
 import com.kh.spring.schedule.model.service.ScheduleService;
@@ -51,12 +52,16 @@ public class ScheduleController {
 
 	}
 	
-	@GetMapping("schedule-detail")
-	public String scheduleDetail(@RequestBody Schedule schedule) {
+	@PostMapping("schedule-detail")
+	public String scheduleDetail(@RequestBody String json) throws JsonMappingException, JsonProcessingException {
+				
+		ObjectMapper mapper = new ObjectMapper();
+		Schedule scheduleObj = mapper.readValue(json, Schedule.class);
 		
-		Map<String,Object> scheduleObj = scheduleService.selectScheduleDetail(schedule);
+		Map<String,Object> schedule = scheduleService.selectScheduleDetail(scheduleObj.getScIdx());
 		
-		logger.debug(scheduleObj.toString());
+		logger.debug(schedule.get("schedule").toString());
+		logger.debug(schedule.get("participants").toString());
 		
 		return "";
 	}

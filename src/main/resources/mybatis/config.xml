@@ -12,5 +12,6 @@
 	</typeAliases>
   	<mappers>
   		<mapper resource="mybatis/mapper/mybatisMapper.xml"/>
+  		<mapper resource="mybatis/mapper/scheduleMapper.xml"/>
   	</mappers>
   </configuration>
