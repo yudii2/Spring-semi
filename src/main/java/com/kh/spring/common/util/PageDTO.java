@@ -6,8 +6,8 @@ import lombok.Data;
 public class PageDTO {
 	
 	private int currPage;
-	private int startPage;
-	private int endPage;
+	private int startNum;	//페이지 넘버링
+	private int endNum;	//페이지 넘버링
 	private int totalCnt;	//총 게시물
 	private int cntPerPage;
 	private int lastPage;
@@ -25,17 +25,17 @@ public class PageDTO {
 	}	
 	
 	public void calcLastPage(int totalCnt, int cntPerPage) {
-		setLastPage((int)Math.ceil(totalCnt/cntPerPage));
+		setLastPage((int) Math.ceil(totalCnt/cntPerPage));	//왜 +1이 필요하지?
 	}
 	
 	public void calcStartEndPage(int currPage, int pageCnt) {
-		setEndPage((int)Math.ceil(currPage/pageCnt * pageCnt));
-		if(getLastPage() < getEndPage()) {					//페이지 넘버링숫자가 6인 경우(curr 6/pageCnt 5 * 5)
-			setEndPage(getLastPage());
+		setStartNum(currPage - (currPage-1)%pageCnt);	//1,6,11
+		if(getStartNum() < 1) {
+			setStartNum(1);
 		}
-		setStartPage(getEndPage() - pageCnt + 1);			//????
-		if(getStartPage() < 1) {
-			setStartPage(1);
+		setEndNum(getStartNum() + 4);	//5,10,15
+		if(getLastPage() < getEndNum()) {					//페이지 넘버링숫자가 6인 경우(curr 6/pageCnt 5 * 5)
+			setEndNum(getLastPage());
 		}
 	}
 	

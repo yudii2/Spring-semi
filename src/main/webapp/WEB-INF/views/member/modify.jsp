@@ -14,15 +14,15 @@
         <div class="tit_side_menu">마이페이지</div>
         <ul class="mypage_side_menu">
           <li>
-          	<a href="/member/mypage/modify-page" class="tit_mypage_gnb">내정보</a>
-            <a href="/member/mypage/modify-page" class="tit_sub_gnb">내정보 수정하기</a>
+          	<a href="/member/modify" class="tit_mypage_gnb">내정보</a>
+            <a href="/member/modify" class="tit_sub_gnb">내정보 수정하기</a>
           </li>
           <li>
           	<a href="/member/mypage" class="tit_mypage_gnb">작성글 관리</a>
           	<a href="/member/mypage" class="tit_sub_gnb">내가 쓴 글 보기</a>
-          	<a href="/member/mypage/reply" class="tit_sub_gnb">내가 쓴 댓글 보기</a>
+          	<a href="/member/my-reply" class="tit_sub_gnb">내가 쓴 댓글 보기</a>
           </li>
-          <li><a href="/member/mypage/my-schedule" class="tit_mypage_gnb">신청내역 관리</a></li>
+          <li><a href="/member/my-schedule" class="tit_mypage_gnb">신청내역 관리</a></li>
         </ul>
       </div>
       <form action="/member/modify" id="modify_form" method="post">
@@ -116,7 +116,7 @@
 			return;
 		  }
 		  
-		  fetch("/member/check-nickname?nickname=" + nickname)
+		  fetch("/member/nickname-check?nickname=" + nickname)
 		  .then(response => {
 			  if(response.ok){	//통신 성공시
 				  return response.text();

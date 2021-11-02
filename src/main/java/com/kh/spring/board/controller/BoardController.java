@@ -24,7 +24,6 @@ import com.kh.spring.member.model.dto.Member;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequiredArgsConstructor
 @RequestMapping("board")
 public class BoardController {
 
@@ -32,25 +31,30 @@ public class BoardController {
 	
 	private final BoardService boardService;
 	
+	public BoardController(BoardService boardService) {
+		super();
+		this.boardService = boardService;
+	}
+
 	@GetMapping("board-form")
 	public void boardForm() {}
 	
 	@GetMapping("board")
-	public void board(PageDTO pageDto, Model model
-						,@RequestParam(value = "currPage", required = false) String currPage
-						,@RequestParam(value = "cntPerPage", required = false) String cntPerPage) {
+	public void board( Model model
+						,@RequestParam(value = "p", required = false) String currPage) {
 		
 		int bdCnt = boardService.countBoard();
+		int cntPerPage = 10;
 		
 		if(currPage == null) {
 			currPage = "1";
 		}
-		if(cntPerPage == null) {
-			cntPerPage = "5";
-		}
-		pageDto = new PageDTO(bdCnt, Integer.parseInt(currPage), Integer.parseInt(cntPerPage));
-		model.addAttribute("page", pageDto);
-		model.addAttribute("boardList",boardService.selectBoardByPage(pageDto));
+		
+		PageDTO pageDto = new PageDTO(bdCnt, Integer.parseInt(currPage), cntPerPage);
+		
+		logger.debug(pageDto.toString());
+		model.addAttribute("page", pageDto)
+			.addAttribute("boardList",boardService.selectBoardByPage(pageDto));
 		
 	}
 	
@@ -60,6 +64,7 @@ public class BoardController {
 								,@SessionAttribute("authentication") Member member) {	//스프링은 ModelAttribute를 사용해서 알아서 multiPartParam객체를 파싱해 dto객체에 담아준다
 		
 		board.setUserId(member.getUserId());
+		board.setNickname(member.getNickname());
 		boardService.insertBoard(files, board);
 			
 		return "redirect:/";

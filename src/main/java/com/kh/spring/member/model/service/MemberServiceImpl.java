@@ -50,6 +50,11 @@ public class MemberServiceImpl implements MemberService{
 		return memberRepository.selectMemberById(userId);
 	}
 
+	@Override
+	public Member selectMemberByNickname(String nickname) {
+		return memberRepository.selectMemberByNickname(nickname);
+	}
+
 	public void authenticateByEmail(JoinForm form, String token) {		//우리가 우리서버에 요청할 때 보낼 값들
 		MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
 		body.add("mail-template", "join-auth-email");
@@ -66,6 +71,7 @@ public class MemberServiceImpl implements MemberService{
 		mailSender.sendEmail(form.getEmail(), "회원가입을 축하합니다.", htmlText);
 				
 	}
+
 
 
 }

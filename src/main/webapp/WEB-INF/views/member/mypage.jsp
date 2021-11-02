@@ -100,32 +100,32 @@
           </div>           
         </form>
         </div>
-        <c:set var="currPage" value="${(empty param.p)? 1 : param.p}" ></c:set>	<!-- 현재 페이지 -->
-        <c:set var="startNum" value="${currPage-(currPage-1)%5}" ></c:set>	<!-- 페이지넘버링 처음 번호(1,5,9,,,) -->
-        <c:set var="lastPage" value="${empty myPosts ? 1 : Math.ceil(fn:length(myPosts)/8)}" ></c:set>	<!-- 총 페이지수 -->
-                
-	    <div class="arrows" >
-	        <c:if test="${startNum > 1}">	
-		      <a href="?p=${startNum-1}"><i class="fas fa-chevron-left leftArrow"></i></a>
+        
+		<div class="arrows" >
+	        <c:if test="${page.currPage > 1}">		<!-- 5,9,, 이상 -->
+		      <a href="?p=${page.currPage-1}"><i class="fas fa-chevron-left leftArrow"></i></a>
 		    </c:if>
-		    <c:if test="${startNum <= 1}">	<!-- 현재 1페이지 -->
+		    <c:if test="${page.currPage <= 1}">	<!-- 현재 1페이지 -->
 		      <span onclick="alert('이전 페이지가 존재하지 않습니다.')"><i class="fas fa-chevron-left leftArrow" ></i></span>
         	</c:if>
         	
 			<ul class="pageNum">	<!-- 페이지 넘버링 -->
-				<c:forEach var="i" begin="0" end="4">
-				<c:if test="${(startNum+i) <= lastPage }">	<!-- 같거나 작을 때만 출력 -->
-				<li><a href="?p=${startNum + i}" class="num ${currPage == (startNum + i) ? 'point' : '' }">${startNum + i}</a></li>	
-				</c:if>
+				<c:forEach var="p" begin="${page.startNum }" end="${page.endNum }">
+					<c:if test="${p == page.currPage }">
+						<li><a class="num point">${p}</a></li>	
+					</c:if>
+					<c:if test="${p != page.currPage }">
+						<li><a href="?p=${p}" class="num">${p}</a></li>	
+					</c:if>					
 				</c:forEach> 		
 			</ul>
 
-			<c:if test="${startNum + 4 < lastPage}">	<!-- 총 페이지 수가 5를 넘으면 i=[5-9] -->
-				<a href="?p=${startNum + 5}"><i class="fas fa-chevron-right rightArrow" ></i></a>	<!-- rightArrow 클릭시 5번page 이동 -->
+			<c:if test="${page.currPage < page.lastPage && page.lastPage > 1}">	<!-- 총 페이지 수가 5를 넘으면 i=[5-9] -->
+				<a href="?p=${page.currPage + 1}"><i class="fas fa-chevron-right rightArrow" ></i></a>	<!-- rightArrow 클릭시 5번page 이동 -->
 			</c:if>
-			<c:if test="${startNum + 4 >= lastPage}">
+ 			<c:if test="${page.currPage >= page.lastPage}">
 				<span onclick="alert('더이상 게시글이 존재하지 않습니다.')"><i class="fas fa-chevron-right rightArrow" ></i></span>
-			</c:if>			
+			</c:if>	  
 		</div>     
       </div>
     </div>

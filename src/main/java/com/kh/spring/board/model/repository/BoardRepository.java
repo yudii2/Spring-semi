@@ -16,12 +16,12 @@ import com.kh.spring.member.model.dto.Member;
 @Mapper
 public interface BoardRepository {
 
-	@Insert("insert into board(bd_idx,user_id,title,content) "
-			+ "values(sc_board_idx.nextval, #{userId}, #{title}, #{content})")
+	@Insert("insert into board(bd_idx,user_id,subject,title,content,nickname) "
+			+ "values(sc_bd_idx.nextval, #{userId},#{subject}, #{title}, #{content}, #{nickname})")
 	void insertBoard(Board board);
 	
 	@Insert("insert into file_info(fl_idx,type_idx,origin_file_name,rename_file_name,save_path) "
-			+ "values(sc_file_idx.nextval,sc_board_idx.currval, #{originFileName}, #{renameFileName}, #{savePath})")
+			+ "values(sc_fl_idx.nextval,sc_bd_idx.currval, #{originFileName}, #{renameFileName}, #{savePath})")
 	void insertFileInfo(FileDTO fileDTO);
 
 	@Select("select * from board where bd_idx = #{bdIdx}")
@@ -36,10 +36,10 @@ public interface BoardRepository {
 	@Select("select count(*) from board")
 	int countBoard();
 	
-	List<BoardView> selectBoardByPage(PageDTO pageDto);
+	List<BoardView> selectBoardByPage(@Param("page") PageDTO pageDto);
 
 	@Select("select count(*) from board where user_id = #{userId}")
 	int countMyPost(Member member);
 
-	List<Board> selectMyPost(@Param("writer") Member member,@Param("writer") PageDTO pageDto);
+	List<Board> selectMyPost(@Param("writer") Member member,@Param("page") PageDTO pageDto);
 }

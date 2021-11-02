@@ -14,7 +14,10 @@ public interface MemberService {
 	public Member authenticateUser(Member member);
 
 	public Member selectMemberById(String userId);
+	public Member selectMemberByNickname(String nickname);
 
 	public void authenticateByEmail(JoinForm form, String token);
+
+	
 
 }

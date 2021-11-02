@@ -6,16 +6,15 @@
   
   <select id="selectBoardByPage" resultType="com.kh.spring.board.model.dto.BoardView">
   	select * 
-  		from (select rownum, B.*
+  		from (select rownum N, B.*
   		from (select * from board_view order by reg_date desc) B)
-  	where rownum between #{start} and #{end}
+  	where N between #{page.start} and #{page.end}
   </select>
   
   <select id="selectMyPost" resultType="com.kh.spring.board.model.dto.Board">
   	select * 
-  		from (select rownum, B.*
-  		from (select * from board order by reg_date desc) B)
-  	where user_id = #{writer.userId} 
-  		and rownum between #{start} and #{end}
+  		from (select rownum N, B.*
+  		from (select * from board where user_id = #{writer.userId} order by reg_date desc) B)
+  		where N between #{page.start} and #{page.end}
   </select>
   </mapper>

@@ -25,6 +25,10 @@ public interface MemberRepository {
 
 	@Select("select * from member where user_id = #{userId}")
 	Member selectMemberById(String userId);
+	@Select("select * from member where nickname = #{nickname}")
+	Member selectMemberByNickname(String nickname);
 
 	List<Board> selectMyPost(String userId, PageDTO pageDto);
+
+	
 }

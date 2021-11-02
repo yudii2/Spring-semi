@@ -6,7 +6,7 @@
     <div class="container con_header">
       <a class="logo" href="/"><img src="/resources/img/logo4.jpg" alt=""></a>
       <ul class="gnb">
-        <li><a href="/index" class="gnb_menu" data-gnb="1">HOME</a></li>
+        <li><a href="/" class="gnb_menu" data-gnb="1">HOME</a></li>
         <li><a href="/mountain/search-seoul" class="gnb_menu" data-gnb="2">등산로검색</a></li>
         <li><a href="/schedule/calendar" class="gnb_menu" data-gnb="3">모임캘린더</a></li>
         <li><a href="/board/board" class="gnb_menu" data-gnb="4">자유게시판</a></li>

@@ -68,7 +68,6 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public List<Board> selectMyPost(Member member, PageDTO pageDto) {
-		logger.debug("서비스 : " + member.toString());
 		return boardRepository.selectMyPost( member,pageDto);
 	}
 

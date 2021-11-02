@@ -6,7 +6,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file="/WEB-INF/views/include/head.jsp" %>
-<link rel="stylesheet" href="/resources/css/board/board-page.css">
+<link rel="stylesheet" href="/resources/css/board/board.css">
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/fixed-header.jsp" %>
@@ -66,13 +66,9 @@
 					</table>
 				</div>
 				
-				<c:set var="page" value="${(empty param.p)? 1 : param.p}"/>
-				<c:set var="startNum" value="${page - (page-1)%5 }"/>
-				<c:set var="lastNum" value="${fn:substringBefore(Math.ceil(count/10),'.')}"/>
-					
 				<div class="footer">
 					<div class="total_page_info">
-						<span class="color bold">${(empty param.p)? 1 : param.p }</span>/${lastNum } pages
+						<span class="color bold">${(empty param.p)? 1 : param.p }</span>/${page.lastPage } pages
 					</div>
 					<form class="search_bar_wrap">
 						<select class='search_subject' name='f'>
@@ -83,33 +79,34 @@
 						<input type="text" name="q" value="${param.q }" placeholder="검색어를 입력하세요."/>
 						<button onclick="location.href='?p=${param.p }&f=${param.f}&q=${param.q }'">검색</button>
 					</form>
-
-					
-					<div class="paging_box">
-						<c:if test="${startNum > 1 }">
-							<a href="?p=${startNum-1 }&f=${param.f }&q=${param.q }"><i class="far fa-caret-square-left"></i></a>
-						</c:if>
-						<c:if test="${startNum <= 1 }">
-							<span onclick="alert('이전 페이지가 없습니다.');"><i class="far fa-caret-square-left"></i></span>
-						</c:if>
-						
-						<ul>
-							<c:forEach var="i" begin="0" end="4">
-							<c:if test="${(startNum+i) <= lastNum }">
-							<li><a class=" ${(page == (startNum+i))? 'color' : '' } bold" href="?p=${startNum+i }&f=${param.f }&q=${param.q }">${startNum+i }</a></li>
-							</c:if>
-							</c:forEach>
+	
+					<div class="arrows" >
+				        <c:if test="${page.currPage > 1}">		<!-- 5,9,, 이상 -->
+					      <a href="?p=${page.currPage-1}"><i class="fas fa-chevron-left leftArrow"></i></a>
+					    </c:if>
+					    <c:if test="${page.currPage <= 1}">	<!-- 현재 1페이지 -->
+					      <span onclick="alert('이전 페이지가 존재하지 않습니다.')"><i class="fas fa-chevron-left leftArrow" ></i></span>
+			        	</c:if>
+			        	
+						<ul class="pageNum">	<!-- 페이지 넘버링 -->
+							<c:forEach var="p" begin="${page.startNum }" end="${page.endNum }">
+								<c:if test="${p == page.currPage }">
+									<li><a class="num point">${p}</a></li>	
+								</c:if>
+								<c:if test="${p != page.currPage }">
+									<li><a href="?p=${p}" class="num">${p}</a></li>	
+								</c:if>					
+							</c:forEach> 		
 						</ul>
+			
+						<c:if test="${page.currPage < page.lastPage && page.lastPage > 1}">	<!-- 총 페이지 수가 5를 넘으면 i=[5-9] -->
+							<a href="?p=${page.currPage + 1}"><i class="fas fa-chevron-right rightArrow" ></i></a>	<!-- rightArrow 클릭시 5번page 이동 -->
+						</c:if>
+			 			<c:if test="${page.currPage >= page.lastPage}">
+							<span onclick="alert('더이상 게시글이 존재하지 않습니다.')"><i class="fas fa-chevron-right rightArrow" ></i></span>
+						</c:if>	 
+					</div>  					
 						
-						<c:if test="${startNum+4 < lastNum }">
-							<a href="?p=${startNum+5 }&f=${param.f }&q=${param.q }"><i class="far fa-caret-square-right"></i></a>
-						</c:if>
-						<c:if test="${startNum+4 >= lastNum }">
-							<span onclick="alert('다음 페이지가 없습니다.');"><i class="far fa-caret-square-right"></i></span>
-						</c:if>
-					</div>
-					
-					
 				</div>
 				
 			</div>

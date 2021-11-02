@@ -162,10 +162,33 @@ public class MemberController {
 
 	}
 	
+	@GetMapping("nickname-check")
+	@ResponseBody
+	public String nicknameCheck(String nickname) {
+		Member member = memberService.selectMemberByNickname(nickname);
+		
+		if(member == null) {
+			return "available";
+		}else {
+			return "disabled";
+		}
+	}
+	
+	@PostMapping("modify")
+	public void modifyImpl(Member member) {
+		
+	}
+	
+	@GetMapping("logout")
+	public String logout(HttpSession session) {	
+		session.removeAttribute("authentication");
+		return "redirect:/";
+	}
+	
 	@GetMapping("mypage")
-	public String mypage(Model model
+	public void mypage(Model model
 						,@SessionAttribute(value = "authentication") Member member
-						,@RequestParam(value = "currPage", required = false) String currPage) {
+						,@RequestParam(value = "p", required = false) String currPage) {
 		int cntPerPage = 5;
 		int bdCnt = boardService.countMyPost(member);
 		
@@ -178,11 +201,15 @@ public class MemberController {
 		logger.debug("멤버 있자나 : " + member.toString());
 		List<Board> myPost = boardService.selectMyPost(member, pageDto);
 		
-		model.addAttribute("authentication",member).addAttribute("postByPage", myPost);
+		model.addAttribute("authentication",member)
+			.addAttribute("postByPage", myPost)
+			.addAttribute("page",pageDto);
 		
-		return "member/mypage";		//Servlet객체를 사용할 때는 void메서드가 아닌 String을 반환해 return할 url을 지정해줘야 한다.
+		//return "member/mypage";		//Servlet객체를 사용할 때는 void메서드가 아닌 String을 반환해 return할 url을 지정해줘야 한다.
 	}
 	
+	@GetMapping("modify")
+	public void modify() {}
 	
 
 	
