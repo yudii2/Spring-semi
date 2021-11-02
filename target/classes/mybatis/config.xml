@@ -13,5 +13,6 @@
   	<mappers>
   		<mapper resource="mybatis/mapper/mybatisMapper.xml"/>
   		<mapper resource="mybatis/mapper/scheduleMapper.xml"/>
+  		<mapper resource="mybatis/mapper/boardMapper.xml"/>
   	</mappers>
   </configuration>

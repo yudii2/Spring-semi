@@ -1,5 +1,7 @@
 package com.kh.spring.member.model.service;
 
+import java.util.List;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -8,8 +10,10 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import com.kh.spring.board.model.dto.Board;
 import com.kh.spring.common.code.Config;
 import com.kh.spring.common.mail.MailSender;
+import com.kh.spring.common.util.PageDTO;
 import com.kh.spring.member.model.dto.Member;
 import com.kh.spring.member.model.repository.MemberRepository;
 import com.kh.spring.member.validator.JoinForm;
@@ -62,4 +66,6 @@ public class MemberServiceImpl implements MemberService{
 		mailSender.sendEmail(form.getEmail(), "회원가입을 축하합니다.", htmlText);
 				
 	}
+
+
 }

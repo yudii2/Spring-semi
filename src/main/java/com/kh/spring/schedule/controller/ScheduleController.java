@@ -8,6 +8,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -72,6 +73,16 @@ public class ScheduleController {
 			
 		return mapper.setDateFormat(DateFormat.getDateInstance(DateFormat.MEDIUM))
 				.writeValueAsString(schedule);
+	}
+	
+	@GetMapping("schedule-modify-form")
+	public void scheduleModifyForm(Schedule schedule
+									,@SessionAttribute(value="authentication", required = false) Member member
+									, Model model) {
+		
+		Schedule scheduleByIdx = (Schedule) scheduleService.selectScheduleDetail(schedule.getScIdx(), member).get("schedule");
+		logger.debug("schedule dDay : " + scheduleByIdx.getDDay());
+		model.addAttribute("schedule",scheduleByIdx);
 	}
 	
 

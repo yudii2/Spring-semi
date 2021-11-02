@@ -49,14 +49,14 @@ $(function () {	//화면 로딩후 시작
 				<tr>
 					<td width="150" align="center">날짜</td>
 					<td align="center">
-						<input type="date"  class="today" min="" name="dDay" id="dDay" size="40" value="${schedule.dDay }" required="required">
+						<input type="date"  class="today" name="dDay" id="dDay" size="40" required="required">
 					</td>
 				</tr>
 
 				<tr>
 					<td width="150" align="center">모집 인원</td>
 					<td align="center">
-						<select name="allowedNum" id="allowedNum" value="${schedule.allowedNum }">
+						<select name="allowedNum" id="allowedNum">
 							<option value="2" <c:if test="${schedule.allowedNum  == 2}">selected</c:if>>2명</option>
 							<option value="3" <c:if test="${schedule.allowedNum  == 3}">selected</c:if>>3명</option>
 							<option value="4" <c:if test="${schedule.allowedNum  == 4}">selected</c:if>>4명</option>

@@ -4,10 +4,14 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import com.kh.spring.board.model.dto.Board;
+import com.kh.spring.board.model.dto.BoardView;
 import com.kh.spring.common.util.FileDTO;
+import com.kh.spring.common.util.PageDTO;
+import com.kh.spring.member.model.dto.Member;
 
 @Mapper
 public interface BoardRepository {
@@ -25,4 +29,17 @@ public interface BoardRepository {
 
 	@Select("select * from file_info where type_idx = #{bdIdx}")
 	List<FileDTO> selectFilesByBdIdx(String bdIdx);
+
+	@Select("select * from board_view")
+	List<BoardView> selectAllBoard();
+	
+	@Select("select count(*) from board")
+	int countBoard();
+	
+	List<BoardView> selectBoardByPage(PageDTO pageDto);
+
+	@Select("select count(*) from board where user_id = #{userId}")
+	int countMyPost(Member member);
+
+	List<Board> selectMyPost(@Param("writer") Member member,@Param("writer") PageDTO pageDto);
 }

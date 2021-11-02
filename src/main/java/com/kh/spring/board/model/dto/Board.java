@@ -7,11 +7,15 @@ import lombok.Data;
 @Data
 public class Board {
 	
-   private String bdIdx;
-   private String userId;
-   private Date regDate;
-   private String title;
-   private String content;
-   private int isDel;
+	private String bdIdx;
+	private String userId;
+	private String nickname;
+	private String title;
+	private String subject;
+	private String content;
+	private Date regDate;
+	private int viewCnt;
+	private String profileSavePath;
+	private String profileRenameFileName;
 
 }

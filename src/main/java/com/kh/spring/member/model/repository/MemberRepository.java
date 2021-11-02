@@ -1,9 +1,13 @@
 package com.kh.spring.member.model.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import com.kh.spring.board.model.dto.Board;
+import com.kh.spring.common.util.PageDTO;
 import com.kh.spring.member.model.dto.Member;
 import com.kh.spring.member.validator.JoinForm;
 
@@ -21,4 +25,6 @@ public interface MemberRepository {
 
 	@Select("select * from member where user_id = #{userId}")
 	Member selectMemberById(String userId);
+
+	List<Board> selectMyPost(String userId, PageDTO pageDto);
 }

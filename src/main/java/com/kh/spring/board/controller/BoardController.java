@@ -10,12 +10,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.spring.board.model.dto.Board;
+import com.kh.spring.board.model.dto.BoardView;
 import com.kh.spring.board.model.service.BoardService;
+import com.kh.spring.common.util.PageDTO;
 import com.kh.spring.member.model.dto.Member;
 
 import lombok.RequiredArgsConstructor;
@@ -31,6 +34,25 @@ public class BoardController {
 	
 	@GetMapping("board-form")
 	public void boardForm() {}
+	
+	@GetMapping("board")
+	public void board(PageDTO pageDto, Model model
+						,@RequestParam(value = "currPage", required = false) String currPage
+						,@RequestParam(value = "cntPerPage", required = false) String cntPerPage) {
+		
+		int bdCnt = boardService.countBoard();
+		
+		if(currPage == null) {
+			currPage = "1";
+		}
+		if(cntPerPage == null) {
+			cntPerPage = "5";
+		}
+		pageDto = new PageDTO(bdCnt, Integer.parseInt(currPage), Integer.parseInt(cntPerPage));
+		model.addAttribute("page", pageDto);
+		model.addAttribute("boardList",boardService.selectBoardByPage(pageDto));
+		
+	}
 	
 	@PostMapping("upload")
 	public String uploadBoard(Board board
@@ -50,4 +72,6 @@ public class BoardController {
 		model.addAttribute("datas", commandMap);
 		
 	}
+	
+	
 }
