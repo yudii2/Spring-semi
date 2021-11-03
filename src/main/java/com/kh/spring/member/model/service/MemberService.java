@@ -18,6 +18,8 @@ public interface MemberService {
 
 	public void authenticateByEmail(JoinForm form, String token);
 
+	public int countMySchedule(Member member);
+
 	
 
 }

@@ -25,7 +25,7 @@ public class PageDTO {
 	}	
 	
 	public void calcLastPage(int totalCnt, int cntPerPage) {
-		setLastPage((int) Math.ceil(totalCnt/cntPerPage));	//왜 +1이 필요하지?
+		setLastPage((int)(Math.ceil(totalCnt/cntPerPage)) == 0 ? 1 : (int)(Math.ceil(totalCnt/cntPerPage)));	//왜 +1이 필요하지?
 	}
 	
 	public void calcStartEndPage(int currPage, int pageCnt) {

@@ -17,4 +17,27 @@
   		from (select * from board where user_id = #{writer.userId} order by reg_date desc) B)
   		where N between #{page.start} and #{page.end}
   </select>
+  
+  <select id="selectMyReply" resultType="com.kh.spring.board.model.dto.Reply">
+  	select * 
+  		from (select rownum N, B.*
+  		from (select * from reply where user_id = #{writer.userId} order by reg_date desc) B)
+  		where N between #{page.start} and #{page.end}
+  </select>
+  
+  <select id="selectMySchedule" resultType="com.kh.spring.schedule.model.dto.Schedule">
+  	select * from (select rownum rm, F.*
+  		from (select * from schedule S
+  			join participant_list L using(sc_idx)
+  			join participant_history H using (pl_idx)
+  				where H.user_id = #{parti.userId} order by d_day desc) F)
+  			where RM between #{page.start} and #{page.end}  		
+  </select>
+<!--   
+  
+select * FROM (SELECT ROWNUM RM, F.* 
+                from (SELECT * FROM schedule S 
+                                join participant_list L using(sc_idx)
+                                join participant_history H using (pl_idx) where H.user_id = 'USER2' order by d_day desc) F)
+WHERE RM BETWEEN 3 AND 8; -->
   </mapper>

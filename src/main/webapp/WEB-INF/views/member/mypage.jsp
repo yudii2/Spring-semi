@@ -25,7 +25,7 @@
           <li>
           	<a href="/member/mypage" class="tit_mypage_gnb">작성글 관리</a>
           	<a href="/member/mypage" class="tit_sub_gnb">내가 쓴 글 보기</a>
-          	<a href="/member/my-reply" class="tit_sub_gnb">내가 쓴 댓글 보기</a>
+          	<a href="/member/reply" class="tit_sub_gnb">내가 쓴 댓글 보기</a>
           </li>
           <li><a href="/member/my-schedule" class="tit_mypage_gnb">신청내역 관리</a></li>
         </ul>
@@ -50,14 +50,14 @@
 
           <div class="profile_desc">
             <h1 class="nickname">${authentication.nickname}</h1>
-            <h2 class="cnt" >내 게시글 수 <span id="postCnt">${fn:length(myPosts)}</span> 개</h2>
-           <%--  <h2 class="cnt">내 댓글 수 <span>${fn:length(myReply)}</span> 개</h2> --%>
+            <h2 class="cnt" >내 게시글 수 <span id="postCnt">${authentication.postCnt}</span> 개</h2>
+            <h2 class="cnt">내 댓글 수 <span>${authentication.replyCnt}</span> 개</h2>
             <span class="info">${authentication.info }</span>
           </div>
         </div>
         <ul class="tabs">
           <li id="tab_post"><a href="/member/mypage">내가 쓴 글</a></li>
-          <li id="tab_reply"><a href="/member/mypage/reply">내가 쓴 댓글</a></li>
+          <li id="tab_reply"><a href="/member/reply">내가 쓴 댓글</a></li>
         </ul>
         <div class="my_posts">
           <div class="col_my_posts">
@@ -100,33 +100,7 @@
           </div>           
         </form>
         </div>
-        
-		<div class="arrows" >
-	        <c:if test="${page.currPage > 1}">		<!-- 5,9,, 이상 -->
-		      <a href="?p=${page.currPage-1}"><i class="fas fa-chevron-left leftArrow"></i></a>
-		    </c:if>
-		    <c:if test="${page.currPage <= 1}">	<!-- 현재 1페이지 -->
-		      <span onclick="alert('이전 페이지가 존재하지 않습니다.')"><i class="fas fa-chevron-left leftArrow" ></i></span>
-        	</c:if>
-        	
-			<ul class="pageNum">	<!-- 페이지 넘버링 -->
-				<c:forEach var="p" begin="${page.startNum }" end="${page.endNum }">
-					<c:if test="${p == page.currPage }">
-						<li><a class="num point">${p}</a></li>	
-					</c:if>
-					<c:if test="${p != page.currPage }">
-						<li><a href="?p=${p}" class="num">${p}</a></li>	
-					</c:if>					
-				</c:forEach> 		
-			</ul>
-
-			<c:if test="${page.currPage < page.lastPage && page.lastPage > 1}">	<!-- 총 페이지 수가 5를 넘으면 i=[5-9] -->
-				<a href="?p=${page.currPage + 1}"><i class="fas fa-chevron-right rightArrow" ></i></a>	<!-- rightArrow 클릭시 5번page 이동 -->
-			</c:if>
- 			<c:if test="${page.currPage >= page.lastPage}">
-				<span onclick="alert('더이상 게시글이 존재하지 않습니다.')"><i class="fas fa-chevron-right rightArrow" ></i></span>
-			</c:if>	  
-		</div>     
+		<%@ include file="/WEB-INF/views/include/pagination.jsp" %>   
       </div>
     </div>
   </section>

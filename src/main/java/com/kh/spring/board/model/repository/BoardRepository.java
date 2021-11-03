@@ -9,9 +9,11 @@ import org.apache.ibatis.annotations.Select;
 
 import com.kh.spring.board.model.dto.Board;
 import com.kh.spring.board.model.dto.BoardView;
+import com.kh.spring.board.model.dto.Reply;
 import com.kh.spring.common.util.FileDTO;
 import com.kh.spring.common.util.PageDTO;
 import com.kh.spring.member.model.dto.Member;
+import com.kh.spring.schedule.model.dto.Schedule;
 
 @Mapper
 public interface BoardRepository {
@@ -42,4 +44,15 @@ public interface BoardRepository {
 	int countMyPost(Member member);
 
 	List<Board> selectMyPost(@Param("writer") Member member,@Param("page") PageDTO pageDto);
+
+	@Select("select count(*) from reply where user_id = #{userId}")
+	int countMyReply(Member member);
+
+	List<Reply> selectMyReply(@Param("writer") Member member,@Param("page") PageDTO pageDto);
+
+	List<Schedule> selectMySchedule(@Param("parti") Member member,@Param("page") PageDTO pageDto);
+
+	@Select("select m_height from mountain where m_name = #{mountainName}")
+	String selectMountainHeight(String mountainName);
+	
 }

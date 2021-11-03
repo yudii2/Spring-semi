@@ -81,7 +81,7 @@ public class ScheduleController {
 									, Model model) {
 		
 		Schedule scheduleByIdx = (Schedule) scheduleService.selectScheduleDetail(schedule.getScIdx(), member).get("schedule");
-		logger.debug("schedule dDay : " + scheduleByIdx.getDDay());
+		logger.debug("schedule dDay : " + scheduleByIdx.getdDay());
 		model.addAttribute("schedule",scheduleByIdx);
 	}
 	

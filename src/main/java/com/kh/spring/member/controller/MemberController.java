@@ -40,6 +40,7 @@ import com.kh.spring.member.model.service.MemberService;
 import com.kh.spring.member.model.service.MemberServiceImpl;
 import com.kh.spring.member.validator.JoinForm;
 import com.kh.spring.member.validator.JoinFormValidator;
+import com.kh.spring.schedule.model.dto.Schedule;
 
 
 
@@ -191,6 +192,7 @@ public class MemberController {
 						,@RequestParam(value = "p", required = false) String currPage) {
 		int cntPerPage = 5;
 		int bdCnt = boardService.countMyPost(member);
+		int rpCnt = boardService.countMyReply(member);
 		
 		if(currPage == null) {
 			currPage = "1";
@@ -198,19 +200,70 @@ public class MemberController {
 		
 		PageDTO pageDto = new PageDTO(bdCnt, Integer.parseInt(currPage), cntPerPage);
 		logger.debug(pageDto.toString());
-		logger.debug("멤버 있자나 : " + member.toString());
-		List<Board> myPost = boardService.selectMyPost(member, pageDto);
+		
+		member.setPostCnt(bdCnt);
+		member.setReplyCnt(rpCnt);
 		
 		model.addAttribute("authentication",member)
-			.addAttribute("postByPage", myPost)
+			.addAttribute("postByPage", boardService.selectMyPost(member, pageDto))
 			.addAttribute("page",pageDto);
 		
-		//return "member/mypage";		//Servlet객체를 사용할 때는 void메서드가 아닌 String을 반환해 return할 url을 지정해줘야 한다.
 	}
 	
 	@GetMapping("modify")
 	public void modify() {}
 	
+	@GetMapping("reply")
+	public void reply(Model model
+					,@SessionAttribute(value = "authentication") Member member
+					,@RequestParam(value = "p", required = false) String currPage) {
+				
+		int cntPerPage = 5;
+		int bdCnt = boardService.countMyPost(member);
+		int rpCnt = boardService.countMyReply(member);
+		
+		if(currPage == null) {
+			currPage = "1";
+		}
+		
+		PageDTO pageDto = new PageDTO(bdCnt, Integer.parseInt(currPage), cntPerPage);
+		logger.debug(pageDto.toString());
+		
+		member.setPostCnt(bdCnt);
+		member.setReplyCnt(rpCnt);
+		
+		model.addAttribute("authentication",member)
+			.addAttribute("replyByPage", boardService.selectMyReply(member, pageDto))
+			.addAttribute("page",pageDto);
+		
+	}
+	
+	@GetMapping("my-schedule")
+	public void schedule(Model model
+						,@SessionAttribute(value = "authentication") Member member
+						,@RequestParam(value = "p", required = false) String currPage) {
 
+		int cntPerPage = 8;
+		int bdCnt = boardService.countMyPost(member);
+		int rpCnt = boardService.countMyReply(member);
+		int scCnt = memberService.countMySchedule(member);
+		
+		if(currPage == null) {
+			currPage = "1";
+		}
+		
+		PageDTO pageDto = new PageDTO(scCnt, Integer.parseInt(currPage), cntPerPage);
+
+		logger.debug("스케줄 페이징 :" + pageDto.toString());
+		
+		member.setPostCnt(bdCnt);
+		member.setReplyCnt(rpCnt);
+
+		model.addAttribute("authentication",member)
+			.addAttribute("mySchedule", boardService.selectMySchedule(member,pageDto))
+			.addAttribute("page",pageDto);		
+		
+		
+	}
 	
 }

@@ -30,5 +30,8 @@ public interface MemberRepository {
 
 	List<Board> selectMyPost(String userId, PageDTO pageDto);
 
+	@Select("select count(*) from schedule join participant_list L using(sc_idx) join participant_history H using (pl_idx) where H.user_id = #{userId}")
+	int countMySchedule(Member member);
+
 	
 }

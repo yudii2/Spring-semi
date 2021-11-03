@@ -10,11 +10,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.board.model.dto.Board;
 import com.kh.spring.board.model.dto.BoardView;
+import com.kh.spring.board.model.dto.Reply;
 import com.kh.spring.board.model.repository.BoardRepository;
 import com.kh.spring.common.util.FileDTO;
 import com.kh.spring.common.util.FileUtil;
 import com.kh.spring.common.util.PageDTO;
 import com.kh.spring.member.model.dto.Member;
+import com.kh.spring.schedule.model.dto.Schedule;
 
 import lombok.RequiredArgsConstructor;
 
@@ -70,5 +72,26 @@ public class BoardServiceImpl implements BoardService {
 	public List<Board> selectMyPost(Member member, PageDTO pageDto) {
 		return boardRepository.selectMyPost( member,pageDto);
 	}
+
+	@Override
+	public int countMyReply(Member member) {
+		return boardRepository.countMyReply(member);
+	}
+
+	@Override
+	public List<Reply> selectMyReply(Member member, PageDTO pageDto) {
+		return boardRepository.selectMyReply(member,pageDto);
+	}
+
+	@Override
+	public List<Schedule> selectMySchedule(Member member, PageDTO pageDto) {
+		List<Schedule> schedules = boardRepository.selectMySchedule(member,pageDto);
+		
+		for (Schedule schedule : schedules) {
+			schedule.setmHeight(boardRepository.selectMountainHeight(schedule.getMountainName()));
+		}
+		return schedules;
+	}
+
 
 }

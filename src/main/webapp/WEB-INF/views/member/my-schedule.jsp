@@ -48,8 +48,8 @@
 
           <div class="profile_desc">
             <h1 class="nickname">${authentication.nickname}</h1>
-            <h2 class="cnt" >내 게시글 수 <span id="postCnt">${fn:length(myPosts)}</span> 개</h2>
-            <h2 class="cnt">내 댓글 수 <span>${fn:length(myReply)}</span> 개</h2>
+            <h2 class="cnt" >내 게시글 수 <span id="postCnt">${authentication.postCnt}</span> 개</h2>
+            <h2 class="cnt">내 댓글 수 <span>${authentication.replyCnt}</span> 개</h2>
             <span class="info">${authentication.info }</span>
           </div>
         </div>
@@ -93,10 +93,9 @@
 	            </div>          	
           	</c:forEach>          	
           </c:if>
-
-
           </div>
         </div>
+ 		<%@ include file="/WEB-INF/views/include/pagination.jsp" %>
       </div>
     </div>
   </section>

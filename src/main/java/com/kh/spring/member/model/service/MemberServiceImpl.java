@@ -72,6 +72,11 @@ public class MemberServiceImpl implements MemberService{
 				
 	}
 
+	@Override
+	public int countMySchedule(Member member) {
+		return memberRepository.countMySchedule(member);
+	}
+
 
 
 }

@@ -17,22 +17,22 @@
       <div class="wrap_mypage_side_menu">
         <div class="tit_side_menu">마이페이지</div>
         <ul class="mypage_side_menu">
-          <li><a href="/member/mypage/modify-page" class="tit_mypage_gnb">내정보</a>
-            <a href="/member/mypage/modify-page" class="tit_sub_gnb">내정보 수정하기</a>
+          <li><a href="/member/modify" class="tit_mypage_gnb">내정보</a>
+            <a href="/member/modify" class="tit_sub_gnb">내정보 수정하기</a>
           </li>
           <li>
           	<a href="/member/mypage" class="tit_mypage_gnb">작성글 관리</a>
           	<a href="/member/mypage" class="tit_sub_gnb">내가 쓴 글 보기</a>
-          	<a href="/member/mypage/reply" class="tit_sub_gnb">내가 쓴 댓글 보기</a>
+          	<a href="/member/reply" class="tit_sub_gnb">내가 쓴 댓글 보기</a>
           </li>
-          <li><a href="/member/mypage/my-schedule" class="tit_mypage_gnb">신청내역 관리</a></li>
+          <li><a href="/member/my-schedule" class="tit_mypage_gnb">신청내역 관리</a></li>
         </ul>
       </div>
       <div class="wrap_my_contents">
         <div class="profile">
           <div class="profile_img">
 		  <c:if test="${not empty authentication and not empty authentication.profile}">
-	      	<img id="target_img" src="http://localhost:7070/file/${authentication.profile}">
+	      	<img id="target_img" src="http://localhost:7979/file/${authentication.profile}">
 	      </c:if>
 	      <c:if test="${not empty authentication and empty authentication.profile}">
 	        <img id="target_img" src="/resources/img/user.png">
@@ -45,8 +45,8 @@
 
           <div class="profile_desc">
             <h1 class="nickname">${authentication.nickname}</h1>
-            <h2 class="cnt">내 게시글 수 <span>${fn:length(myPosts)} 개</span></h2>
-            <h2 class="cnt">내 댓글 수 <span>${fn:length(myReply)} 개</span></h2>
+            <h2 class="cnt" >내 게시글 수 <span id="postCnt">${authentication.postCnt}</span> 개</h2>
+            <h2 class="cnt">내 댓글 수 <span>${authentication.replyCnt}</span> 개</h2>
             <span class="info">${authentication.info }</span>
           </div>
         </div>
@@ -91,32 +91,7 @@
           </div>
 		</form>        
         </div>
-        <c:set var="currPage" value="${(empty param.p)? 1 : param.p}" ></c:set>	<!-- 현재 페이지 -->
-        <c:set var="startNum" value="${currPage-(currPage-1)%5}" ></c:set>	<!-- 페이지넘버링 처음 번호(1,5,9,,,) -->
-        <c:set var="lastPage" value="${empty myReply ? 1 : Math.ceil(fn:length(myReply)/8)}" ></c:set>	<!-- 총 페이지수 -->
-	    <div class="arrows" >
-	        <c:if test="${startNum > 1}">	
-		      <a href="?p=${startNum-1}"><i class="fas fa-chevron-left leftArrow"></i></a>
-		    </c:if>
-		    <c:if test="${startNum <= 1}">	<!-- 현재 1페이지 -->
-		      <span onclick="alert('이전 페이지가 존재하지 않습니다.')"><i class="fas fa-chevron-left leftArrow" ></i></span>
-        	</c:if>
-        	
-			<ul class="pageNum">	<!-- 페이지 넘버링 -->
-				<c:forEach var="i" begin="0" end="4">
-				<c:if test="${(startNum+i) <= lastPage }">	<!-- 같거나 작을 때만 출력 -->
-				<li><a href="?p=${startNum + i}" class="num ${currPage == (startNum + i) ? 'point' : '' }">${startNum + i}</a></li>	
-				</c:if>
-				</c:forEach> 		
-			</ul>
-
-			<c:if test="${startNum + 4 < lastPage}">	<!-- 총 페이지 수가 5를 넘으면 i=[5-9] -->
-				<a href="?p=${startNum + 5}"><i class="fas fa-chevron-right rightArrow" ></i></a>	<!-- rightArrow 클릭시 5번page 이동 -->
-			</c:if>
-			<c:if test="${startNum + 4 >= lastPage}">
-				<span onclick="alert('더이상 게시글이 존재하지 않습니다.')"><i class="fas fa-chevron-right rightArrow" ></i></span>
-			</c:if>			
-		</div> 
+		<%@ include file="/WEB-INF/views/include/pagination.jsp" %>
       </div>
     </div>
   </section>

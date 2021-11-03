@@ -49,7 +49,7 @@ public class ScheduleControllerTest {
 		List<Schedule> schedules = new ArrayList<Schedule>();
 		Schedule schedule = new Schedule();
 		schedule.setUserId("test1");
-		schedule.setDDay(new Date(20211110));
+		schedule.setdDay(new Date(20211110));
 		schedule.setMountainName("북한산");
 		schedule.setAllowedNum(5);
 		schedule.setInfo("테스트중");
@@ -57,7 +57,7 @@ public class ScheduleControllerTest {
 		
 		Schedule schedule2 = new Schedule();
 		schedule2.setUserId("test2");
-		schedule2.setDDay(new Date(20211110));
+		schedule2.setdDay(new Date(20211110));
 		schedule2.setMountainName("한산");
 		schedule2.setAllowedNum(5);
 		schedule2.setInfo("테스트중");
@@ -82,7 +82,7 @@ public class ScheduleControllerTest {
 		
 		Schedule schedule = new Schedule();
 		schedule.setUserId("test1");
-		schedule.setDDay(new Date(20211110));
+		schedule.setdDay(new Date(20211110));
 		schedule.setMountainName("북한산");
 		schedule.setAllowedNum(5);
 		schedule.setInfo("테스트중");
