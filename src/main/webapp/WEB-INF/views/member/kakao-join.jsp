@@ -192,25 +192,25 @@
     
     <br><br>
 
-   
-      <h3>닉네임</h3>
+   <div>
+      <h3>닉네임</h3>  
       <input type="text" name="nickname" id="nickname"  required />
       <button class="btn" id="checkNickname">닉네임확인</button>
+      
        <h1 class="valid-msg" id="nickname2" style="text-align: left;">
        <c:if test="${not empty param.err and not empty kakaojoinValid.nickname}">
-       이미 존재하는 닉네임 입니다.
-        </c:if>
-        </h1>
+       		이미 존재하는 닉네임 입니다.
+       </c:if>
+       </h1>
+   	</div>   
       
-      
-      </div>
 
    <div>
       <h3>생년월일</h3>
      <div class="birth">
           <select name="birth" id="birth" required>
            <option value="">년도</option>
-   
+
            <option value="2021">2021</option>
            <option value="2020">2020</option>
            <option value="2019">2019</option>
@@ -366,63 +366,16 @@
   </div>
 
 
-   <div>
-     <h3>자기소개</h3>
-      <textarea  name="information" id="information" style="margin-left: 0px" cols="40" rows="5"spellcheck="true" required></textarea>      
-   </div>
+	   <div>
+	     <h3>자기소개</h3>
+	      <textarea  name="information" id="information" style="margin-left: 0px" cols="40" rows="5"spellcheck="true" required></textarea>      
+	   </div>
 
 	  <input type="hidden" name="kakaoId" value="${kakaoId}">
       <button id="join" type="submit" onclick="fn_check()">가입하기</button>
 
     </form>          
-     <script type="text/javascript" src="/resources/js/member/kakaojoinForm.js">
-     
-     
-     function fn_check() {
-    	 if(document.login.chk1.checked == false ||
-    		document.login.chk2.checked == false) {
-    		 alert("약관에 동의해주세요")
- 			return false; 	
-	
-     }
-       location = "http://localhost:7070";
-      
-     }
-     
-     
-     
-     
-     $(function () {
-    	 chk1_CheckedChanged();	 
-     });
-     
-     //체크박스 체크 선택 또는 해제시 상태 확인 업데이트
-     $("#chk1").chage(function() {
-    	 chk1_CheckedChanged();
-     }); 
-     
-     function chk1_CheckedChanged() {
- 		if($("#chk1").prop("checked")){
-			closole.log("체크");	
-			$("#join").prop("disabled", false);
-		}
-		else{
-			console.log("언체크");ㅣ
-			$("#join").prop("disabled", true);
-			
-		}		
-	}
-    	 
-    	 
-   
-	
-     
-     
-     
-     
-     
-     </script>
-     
+
 </section>
 
 

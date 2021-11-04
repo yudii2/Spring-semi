@@ -1,22 +1,16 @@
 package com.kh.spring.member.controller;
 
-import java.util.List;
 import java.util.UUID;
 
-import javax.mail.Session;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,9 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.util.CookieGenerator;
 
-import com.kh.spring.board.model.dto.Board;
 import com.kh.spring.board.model.service.BoardService;
 import com.kh.spring.common.code.ErrorCode;
 import com.kh.spring.common.exception.HandleableException;
@@ -37,10 +29,8 @@ import com.kh.spring.common.util.PageDTO;
 import com.kh.spring.common.validator.ValidatorResult;
 import com.kh.spring.member.model.dto.Member;
 import com.kh.spring.member.model.service.MemberService;
-import com.kh.spring.member.model.service.MemberServiceImpl;
 import com.kh.spring.member.validator.JoinForm;
 import com.kh.spring.member.validator.JoinFormValidator;
-import com.kh.spring.schedule.model.dto.Schedule;
 
 
 
@@ -173,6 +163,29 @@ public class MemberController {
 		}else {
 			return "disabled";
 		}
+	}
+	
+	@GetMapping("kakao-login")
+	@ResponseBody
+	public String kakaoLogin(String userId) {
+		logger.debug(userId);
+		Member member = memberService.selectMemberById(userId);
+		
+		if(member == null || member.getUserId().equals("")) {
+			return "kakaoJoin";
+		}else {
+			return "kakaoLogin";
+		}
+	}
+	
+	@GetMapping("kakao-join")
+	public void kakaoJoin() {}
+	
+	@PostMapping("kakao-join")
+	public void kakaoJoinImpl(Member member, @RequestParam(name = "kakaoId") String kakaoId) {
+		logger.debug(member.toString());
+		logger.debug(kakaoId);
+		
 	}
 	
 	@PostMapping("modify")
