@@ -146,7 +146,7 @@
 						</div>
 						
 						<%-- 로그인했을 경우에만 댓글을 쓸 수 있어야함 --%>
-						<form class="frm_write_cmt" action="/reply/add-reply?bd_idx=${board.bdIdx }" method="POST">
+						<form class="frm_write_cmt" action="/reply/add-reply?bdIdx=${board.bdIdx }" method="POST">
 							<div class="cmt_write_box">
 								<c:if test="${not empty authentication.userId }">
 									<div class="cmt_writer_id">${authentication.nickname }</div>
