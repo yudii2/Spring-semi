@@ -42,7 +42,7 @@
 								<tr style="height: 30px; line-height: 30px;">
 									<td>${board.bdIdx}</td>
 									<td><a href="/board/board-page?f=subject&q=${board.subject }">${board.subject}</a></td>
-									<td><a href="/board/board-detail?p=${param.p }&f=${param.f}&q=${param.q }&bd_idx=${board.bdIdx }">${board.title}</a>
+									<td><a href="/board/board-detail?bdIdx=${board.bdIdx }">${board.title}</a>
 										<span>[${board.replyCnt }]</span>
 									</td>
 									<td><a href="/board/board-page?f=nickname&q=${board.nickname }">${board.nickname}</a></td>

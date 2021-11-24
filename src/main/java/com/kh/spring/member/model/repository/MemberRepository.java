@@ -28,7 +28,7 @@ public interface MemberRepository {
 	@Select("select * from member where nickname = #{nickname}")
 	Member selectMemberByNickname(String nickname);
 
-	List<Board> selectMyPost(String userId, PageDTO pageDto);
+	/* List<Board> selectMyPost(String userId, PageDTO pageDto);  boardRepository에 존재 */	
 
 	@Select("select count(*) from schedule join participant_list L using(sc_idx) join participant_history H using (pl_idx) where H.user_id = #{userId}")
 	int countMySchedule(Member member);

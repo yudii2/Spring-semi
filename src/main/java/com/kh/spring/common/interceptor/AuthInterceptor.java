@@ -13,7 +13,6 @@ import com.kh.spring.common.code.ErrorCode;
 import com.kh.spring.common.code.member.MemberGrade;
 import com.kh.spring.common.exception.HandleableException;
 import com.kh.spring.member.model.dto.Member;
-import com.kh.spring.member.validator.JoinForm;
 
 
 //controller넘어가기 전 사전 작업 (권한 관리 등) DispatcherServlet 의 권한을 HandlerInterceptor가 가로채 기능수행

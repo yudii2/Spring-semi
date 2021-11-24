@@ -19,39 +19,39 @@
 				<div class="section_top">
 					<h2>게시글 상세페이지</h2>
 					<div class='btn_area'>
-						<c:if test="${authentication.userId == datas.board.userId }">
-						<a class="btn" href="/board/delete-board?bd_idx=${datas.board.bdIdx }">글삭제</a>
+						<c:if test="${authentication.userId == board.userId }">
+						<a class="btn" href="/board/delete-board?bdIdx=${board.bdIdx }">글삭제</a>
 						</c:if>
 						
-						<c:if test="${not empty datas.nextIdx }">
-							<a class="btn" href="/board/board-detail?bd_idx=${datas.nextIdx }">이전글</a>
+						<c:if test="${not empty nextIdx }">
+							<a class="btn" href="/board/board-detail?bdIdx=${nextIdx }">이전글</a>
 						</c:if>
-						<c:if test="${empty datas.nextIdx }">
+						<c:if test="${nextIdx == 'none'}">
 							<a class="btn"><span class="btn" onclick="alert('이전글이 없습니다.');">이전글</span></a>
 						</c:if>
 						
-						<c:if test="${not empty datas.prevIdx }">
-							<a class="btn" href="/board/board-detail?bd_idx=${datas.prevIdx }">다음글</a>
+						<c:if test="${not empty prevIdx }">
+							<a class="btn" href="/board/board-detail?bdIdx=${prevIdx }">다음글</a>
 						</c:if>
-						<c:if test="${empty datas.prevIdx }">
+						<c:if test="${prevIdx == 'none' }">
 							<a class="btn"><span onclick="alert('다음글이 없습니다.');">다음글</span></a>
 						</c:if>
 						
-						<a class="btn" href="/board/board-page">목록</a>
+						<a class="btn" href="/board/board">목록</a>
 					</div>
 				</div>
 				<%-- 해당 게시글이 존재하지 않을 경우 --%>
-				<c:if test="${empty datas.board.bdIdx }">
+				<c:if test="${empty board.bdIdx }">
 				<script type="text/javascript">
 					alert("해당 게시글이 존재하지 않습니다.");
 					(()=>{
-						location.href="/board/board-page";
+						location.href="/board/board";
 					})(); 
 				</script>
 				</c:if>
 				
 				<%-- 게시글이 존재할 경우 datas 속성에 담겨져서 넘어온다. --%>
-				<c:set var="board" value="${datas.board }"/>
+				<c:set var="board" value="${board }"/>
 				
 				<div class="section_content_box">
 					<div class="section_header">
@@ -77,10 +77,10 @@
 								
 								<ul class="dep1">
 									<li>
-										<c:if test="${not empty datas.files}">
+										<c:if test="${not empty files}">
 										<a>첨부파일</a>
 										<ul class="dep2">
-										<c:forEach items="${datas.files }" var="file" varStatus="status">
+										<c:forEach items="${files }" var="file" varStatus="status">
 											<li><a href="${file.downloadURL }">${file.originFileName }</a></li>
 										</c:forEach>
 										</ul>
@@ -106,7 +106,7 @@
 							} );
 						</script>
 						
-						<c:set var="replys" value="${datas.replys }"/>
+						<c:set var="replys" value="${replys }"/>
 						<div class="comment_area">
 							<div class="line_btns">
 								<span>

@@ -12,7 +12,7 @@
        
   <section>   
 	<div class="container con_mountain">						
-	    <form id="search_mountain" name="search" method = "get"  action="/mountain/detail?mName=${param.mName}" onsubmit="return keyword_check()">
+	    <form id="search_mountain" name="search" method="get"  action="/mountain/detail?mName=${param.mName}" onsubmit="return keyword_check()">
 			<h1>지역 또는 산 이름 검색</h1>          
 			<i class="fas fa-search" style="font-size: 30px; color: white;"></i>
 			<input type="text" class="search_bar" name="mName" value="${param.mName}" />  
@@ -26,29 +26,27 @@
 	     <%--  서울 산 --%>
 	    <div class = loc id= "Seoul">
 		    <img id="loc_map" src ="/resources/img/서울지도.PNG"/>	
-		    <c:set var="currPage" value="${(empty param.sp)? 1 : param.sp}" ></c:set>	<!-- 현재 url에 뜨는 페이지 -->	
-      		<c:set var="lastPage" value='2'></c:set>	<!-- 총 페이지수 -->               
+      		           
 			<div class="layout"> 
 			     <div class="arrows" >
-			        <c:if test="${currPage > 1}">	<!-- 이전페이지로 넘기기-->
-				      <a href="?sp=${currPage-1}"><i class="fas fa-chevron-left leftArrow"></i></a>
+			        <c:if test="${page.currPage > 1}">	<!-- 이전페이지로 넘기기-->
+				      <a href="?p=${page.currPage-1}"><i class="fas fa-chevron-left leftArrow"></i></a>
 				    </c:if>
-				    <c:if test="${currPage <= 1}">	<!-- 현재 1페이지일 경우 이전페이지x -->
+				    <c:if test="${page.currPage <= 1}">	<!-- 현재 1페이지일 경우 이전페이지x -->
 				      <span onclick="alert('이전 페이지가 존재하지 않습니다.')"><i class="fas fa-chevron-left leftArrow" ></i></span>
 		        	</c:if>
-		        	<c:if test="${currPage < lastPage}">	
-						<a href="?sp=${currPage + 1}"><i class="fas fa-chevron-right rightArrow"></i></a>
+		        	<c:if test="${page.currPage < page.lastPage}">	
+						<a href="?p=${page.currPage + 1}"><i class="fas fa-chevron-right rightArrow"></i></a>
 					</c:if>
-					<c:if test="${currPage >= lastPage}">
+					<c:if test="${page.currPage >= page.lastPage}">
 						<span onclick="alert('다음 페이지가 존재하지 않습니다.')"><i class="fas fa-chevron-right rightArrow" ></i></span>
 					</c:if>			
-
 				 </div>	
 				 
 			    <div class="mountain_group">		    		    			
 					<c:if test="${not empty seoulMountain}">
 						<c:forEach items="${seoulMountain}" var="seoulMountain">
-				    		<a class="mountain" href="/mountain/detail?mName=${seoulMountain.mName}">${seoulMountain.mName}</a>
+				    		<a class="mountain" href="/mountain/detail/${seoulMountain.mName}">${seoulMountain.mName}</a>
 				   		</c:forEach>
 					</c:if>	
 				</div>

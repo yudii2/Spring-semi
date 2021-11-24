@@ -7,12 +7,13 @@
   	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
 	</settings>
-	<typeAliases>
+<!-- 	<typeAliases>
 		<typeAlias alias="Member" type="com.kh.spring.member.model.dto.Member"/>
-	</typeAliases>
+	</typeAliases> -->
   	<mappers>
   		<mapper resource="mybatis/mapper/mybatisMapper.xml"/>
   		<mapper resource="mybatis/mapper/scheduleMapper.xml"/>
   		<mapper resource="mybatis/mapper/boardMapper.xml"/>
+  		<mapper resource="mybatis/mapper/mountainMapper.xml"/>
   	</mappers>
   </configuration>

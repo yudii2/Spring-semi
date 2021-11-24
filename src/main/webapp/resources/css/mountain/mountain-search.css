@@ -54,6 +54,15 @@
 .arrows{
 	display: flex;
 	justify-content: space-between;
+	position: absolute;
+	top: 490px;
+	margin : 0;
+}
+.leftArrow, .rightArrow{
+	font-size: 17px;	
+}
+.leftArrow{
+	margin-right: 530px;
 }
 
 #loc_map{

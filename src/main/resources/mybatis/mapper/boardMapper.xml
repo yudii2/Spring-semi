@@ -7,7 +7,7 @@
   <select id="selectBoardByPage" resultType="com.kh.spring.board.model.dto.BoardView">
   	select * 
   		from (select rownum N, B.*
-  		from (select * from board_view order by reg_date desc) B)
+  		from (select * from board order by reg_date desc) B)
   	where N between #{page.start} and #{page.end}
   </select>
   
@@ -33,11 +33,17 @@
   				where H.user_id = #{parti.userId} order by d_day desc) F)
   			where RM between #{page.start} and #{page.end}  		
   </select>
-<!--   
   
-select * FROM (SELECT ROWNUM RM, F.* 
-                from (SELECT * FROM schedule S 
-                                join participant_list L using(sc_idx)
-                                join participant_history H using (pl_idx) where H.user_id = 'USER2' order by d_day desc) F)
-WHERE RM BETWEEN 3 AND 8; -->
+  <select id="selectPrevIdx" resultType="string">
+  	select bd_idx 
+  		from (select bd_idx from board where reg_date <![CDATA[<]]>
+  			(select reg_date from board where bd_idx = #{bdIdx}) order by reg_date desc)
+  	where rownum = 1
+  </select>
+  <select id="selectNextIdx" resultType="string">
+  	select bd_idx 
+  		from (select bd_idx from board where reg_date >
+  			(select reg_date from board where bd_idx = #{bdIdx}) order by reg_date)
+  	where rownum = 1
+  </select>
   </mapper>

@@ -54,5 +54,17 @@ public interface BoardRepository {
 
 	@Select("select m_height from mountain where m_name = #{mountainName}")
 	String selectMountainHeight(String mountainName);
+
+	String selectPrevIdx(String bdIdx);
+
+	String selectNextIdx(String bdIdx);
+
+	@Select("select * from reply_view where bd_idx = #{bdIdx} order by reg_date")
+	List<Reply> selectReplyList(String bdIdx);
+
+	@Select("select count(*) from reply where bd_idx = #{bdIdx}")
+	int countReply(String bdIdx);
+
+	
 	
 }

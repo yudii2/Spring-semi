@@ -2,6 +2,7 @@ package com.kh.spring.board.model.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,10 +43,13 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public Map<String, Object> selectBoardDetail(String bdIdx){
 		
-		Board board = boardRepository.selectBoardDetail(bdIdx);		
-		List<FileDTO> files = boardRepository.selectFilesByBdIdx(bdIdx);
+		Optional<Board> board = Optional.ofNullable(boardRepository.selectBoardDetail(bdIdx));		
+		Optional<List<FileDTO>> files = Optional.ofNullable(boardRepository.selectFilesByBdIdx(bdIdx));
+		Optional<String> prevIdx = Optional.ofNullable(boardRepository.selectPrevIdx(bdIdx));
+		Optional<String> nextIdx = Optional.ofNullable(boardRepository.selectNextIdx(bdIdx));
+		Optional<List<Reply>> replys = Optional.ofNullable(boardRepository.selectReplyList(bdIdx));
 
-		return Map.of("board", board, "files", files);
+		return Map.of("board", board.orElse(new Board()), "files", files.orElse(List.of()), "prevIdx", prevIdx.orElse("none"), "nextIdx", nextIdx.orElse("none"), "replys",replys.orElse(List.of()));
 	}
 
 	@Override
@@ -60,7 +64,11 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public List<BoardView> selectBoardByPage(PageDTO pageDto) {
-		return boardRepository.selectBoardByPage(pageDto);
+		List<BoardView> boards = boardRepository.selectBoardByPage(pageDto);
+		if(boards != null) {
+			boards.forEach(e -> e.setReplyCnt(boardRepository.countReply(e.getBdIdx())));
+		}
+		return boards;
 	}
 
 	@Override

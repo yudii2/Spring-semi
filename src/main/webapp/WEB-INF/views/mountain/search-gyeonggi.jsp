@@ -26,18 +26,17 @@
 	   <div class = loc id= "Gyeonggi">
 		    <img id="loc_map" src ="/resources/img/경기도지도.PNG"/>	
 			<div class="layout">
-			    <div class="arrows" >
-			        <c:if test="${currPage > 1}">	<!-- 이전페이지로 넘기기-->
-				      <a href="?gp=${currPage-1}"><i class="fas fa-chevron-left leftArrow"></i></a>
+			     <div class="arrows" >
+			        <c:if test="${page.currPage > 1}">	<!-- 이전페이지로 넘기기-->
+				      <a href="?p=${page.currPage-1}"><i class="fas fa-chevron-left leftArrow"></i></a>
 				    </c:if>
-				    <c:if test="${currPage <= 1}">	<!-- 현재 1페이지일 경우 이전페이지x -->
+				    <c:if test="${page.currPage <= 1}">	<!-- 현재 1페이지일 경우 이전페이지x -->
 				      <span onclick="alert('이전 페이지가 존재하지 않습니다.')"><i class="fas fa-chevron-left leftArrow" ></i></span>
 		        	</c:if>
-		        	
-		        	<c:if test="${currPage < lastPage}">	
-						<a href="?gp=${currPage + 1}"><i class="fas fa-chevron-right rightArrow" ></i></a>
+		        	<c:if test="${page.currPage < page.lastPage}">	
+						<a href="?p=${page.currPage + 1}"><i class="fas fa-chevron-right rightArrow"></i></a>
 					</c:if>
-					<c:if test="${currPage > lastPage}">
+					<c:if test="${page.currPage >= page.lastPage}">
 						<span onclick="alert('다음 페이지가 존재하지 않습니다.')"><i class="fas fa-chevron-right rightArrow" ></i></span>
 					</c:if>			
 				 </div>	
@@ -45,7 +44,7 @@
 			    <div class="mountain_group">		    	
 					<c:if test="${not empty gyeonggiMountain}">
 						<c:forEach items="${gyeonggiMountain}" var="gyeonggiMountain">
-				    		<a class="mountain" href="/mountain/detail?mName=${gyeonggiMountain.mName}">${gyeonggiMountain.mName}</a>
+				    		<a class="mountain" href="/mountain/detail/${gyeonggiMountain.mName}">${gyeonggiMountain.mName}</a>
 				   		</c:forEach>
 					</c:if>				 	   
 			    </div>

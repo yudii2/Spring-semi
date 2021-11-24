@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.kh.spring.mountain.model.repository.MountainRepository">
+
+<!--   <select id="selectAllMountain" resultType="com.kh.spring.mountain.model.dto.Mountain">
+  	select * from mountain where m_loc like '서울%'
+  </select>
+   -->
+  <select id="selectSeoulMountainByPage" resultType="com.kh.spring.mountain.model.dto.Mountain">
+  	select * 
+  		from (select rownum N, M.*
+  		from (select * from mountain where m_loc like '서울%' order by m_name) M)
+  	where N between #{page.start} and #{page.end}
+  </select>
+  
+  <select id="selectGyeonggiMountainByPage" resultType="com.kh.spring.mountain.model.dto.Mountain">
+  	select * 
+  		from (select rownum N, M.*
+  		from (select * from mountain where m_loc like '경기%' order by m_name) M)
+  	where N between #{page.start} and #{page.end}
+  </select>
+  </mapper>
