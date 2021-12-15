@@ -12,4 +12,12 @@ public interface ScheduleService {
 
 	Map<String, Object> selectScheduleDetail(String scIdx, Member member);
 
+	void insertSchedule(Schedule schedule);
+
+	List<Schedule> selectNonApprovedSchdule();
+
+	void approveSchedule(String scIdx);
+
+	void rejectSchedule(String scIdx);
+
 }

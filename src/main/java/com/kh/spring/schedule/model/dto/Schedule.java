@@ -16,8 +16,8 @@ public class Schedule {
 	private int remainNum; // 남은 인원수
 	private String info; //모임 상세정보
 	private String isDel;
-	private int status;
-	private String openChat;	
+	private int status;	//0(대기),1(승인),-1(기각),-2(지난일정)
+	private String openchat;	
 	private int age; //모임 연령대
 	private String nickName;
 	private String userInfo;
@@ -89,11 +89,11 @@ public class Schedule {
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	public String getOpenChat() {
-		return openChat;
+	public String getOpenchat() {
+		return openchat;
 	}
-	public void setOpenChat(String openChat) {
-		this.openChat = openChat;
+	public void setOpenchat(String openchat) {
+		this.openchat = openchat;
 	}
 	public int getAge() {
 		return age;
@@ -123,10 +123,8 @@ public class Schedule {
 	public String toString() {
 		return "Schedule [scIdx=" + scIdx + ", userId=" + userId + ", dDay=" + dDay + ", mountainName=" + mountainName
 				+ ", regDate=" + regDate + ", expDate=" + expDate + ", allowedNum=" + allowedNum + ", remainNum="
-				+ remainNum + ", info=" + info + ", isDel=" + isDel + ", status=" + status + ", openChat=" + openChat
+				+ remainNum + ", info=" + info + ", isDel=" + isDel + ", status=" + status + ", openchat=" + openchat
 				+ ", age=" + age + ", nickName=" + nickName + ", userInfo=" + userInfo + ", mHeight=" + mHeight + "]";
 	}
-	
-	
 	
 }

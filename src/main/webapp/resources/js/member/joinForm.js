@@ -78,29 +78,7 @@
             e.preventDefault();
          }
          
-         /*if(!pwReg.test(password)){
-            document.querySelector('#pwCheck').innerHTML = '비밀번호는 숫자, 영문자, 특수문자 조합의 8글자 이상인 문자열 입니다.';
-            e.preventDefault();
-         }
-         
-         if(!tellReg.test(tell)){
-            document.querySelector('#tellCheck').innerHTML = '전화번호는 9~11자리의 숫자입니다.';
-            e.preventDefault();
-         }*/
       })
-/*let checkList = document.quierySelectorAll(',check');
 
-document.querySelector('#join').addEventListener('click', event =>{
-	console.dir('되라 ')
-	let flg = true;
-	checkList.forEach(e =>{
-		if(!e.checked) flg = false
-	})
-	if(!flg){alert('필수 동의항목에 체크 하셔야합니다.')
-	}else{
-		event.target.href='/member/join'
-	}
-})
-*/
  })();
 

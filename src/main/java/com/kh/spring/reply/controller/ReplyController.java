@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -28,7 +29,7 @@ public class ReplyController {
 
 
 
-	@GetMapping("add-reply")
+	@PostMapping("add-reply")
 	public String addReply(@Param(value = "bdIdx") String bdIdx
 			,Reply reply, @SessionAttribute(name = "authentication") Member member) {
 		
@@ -42,6 +43,6 @@ public class ReplyController {
 		
 		replyService.insertReply(replyObj);
 		
-		return "board/board-detail";
+		return "redirect:/board/board-detail?bdIdx=" + bdIdx;
 	}
 }

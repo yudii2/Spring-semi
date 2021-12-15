@@ -24,6 +24,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.spring.member.model.dto.Member;
 import com.kh.spring.schedule.model.dto.Schedule;
+import com.kh.spring.schedule.model.repository.ScheduleRepository;
 
 
 @WebAppConfiguration	//가상으로 만들어지는 web.xml을 사용해 테스트 환경을 구축
@@ -32,6 +33,8 @@ import com.kh.spring.schedule.model.dto.Schedule;
 public class ScheduleControllerTest {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
+	@Autowired
+	private ScheduleRepository scheduleRepository;
 
 	@Autowired //의존성 주입
 	WebApplicationContext context;
@@ -53,7 +56,7 @@ public class ScheduleControllerTest {
 		schedule.setMountainName("북한산");
 		schedule.setAllowedNum(5);
 		schedule.setInfo("테스트중");
-		schedule.setOpenChat("www.test.com");
+		schedule.setOpenchat("www.test.com");
 		
 		Schedule schedule2 = new Schedule();
 		schedule2.setUserId("test2");
@@ -61,7 +64,7 @@ public class ScheduleControllerTest {
 		schedule2.setMountainName("한산");
 		schedule2.setAllowedNum(5);
 		schedule2.setInfo("테스트중");
-		schedule2.setOpenChat("www.test.com");
+		schedule2.setOpenchat("www.test.com");
 		
 		schedules.add(schedule);
 		schedules.add(schedule2);
@@ -86,7 +89,7 @@ public class ScheduleControllerTest {
 		schedule.setMountainName("북한산");
 		schedule.setAllowedNum(5);
 		schedule.setInfo("테스트중");
-		schedule.setOpenChat("www.test.com");
+		schedule.setOpenchat("www.test.com");
 		
 		List<String> participants = new ArrayList<String>();
 		participants.add("1");
@@ -101,4 +104,8 @@ public class ScheduleControllerTest {
 		
 	}
 
+	@Test
+	public void selectNonApprovedSchdule() {
+		scheduleRepository.selectNonApprovedSchedule().forEach(e -> logger.debug(e.toString()));;
+	}
 }

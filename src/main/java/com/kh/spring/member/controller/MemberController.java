@@ -2,6 +2,7 @@ package com.kh.spring.member.controller;
 
 import java.util.UUID;
 
+import javax.mail.Multipart;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -222,6 +223,10 @@ public class MemberController {
 			.addAttribute("page",pageDto);
 		
 	}
+	@PostMapping("edit-profile")
+	public void editProfileImg(Multipart file) {
+		
+	}
 	
 	@GetMapping("modify")
 	public void modify() {}
@@ -267,16 +272,12 @@ public class MemberController {
 		
 		PageDTO pageDto = new PageDTO(scCnt, Integer.parseInt(currPage), cntPerPage);
 
-		logger.debug("스케줄 페이징 :" + pageDto.toString());
-		
 		member.setPostCnt(bdCnt);
 		member.setReplyCnt(rpCnt);
 
 		model.addAttribute("authentication",member)
 			.addAttribute("mySchedule", boardService.selectMySchedule(member,pageDto))
 			.addAttribute("page",pageDto);		
-		
-		
 	}
 	
 }

@@ -22,16 +22,19 @@ public class AuthInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
 		
 		String[] uriArr = request.getRequestURI().split("/");
-	
+		
+		HttpSession session = request.getSession();
+		Member member = (Member) session.getAttribute("authentication");
 		
 		if(uriArr.length != 0) {
 			switch (uriArr[1]) {
 				case "member":
 					memberAuthorize(request, response, uriArr);
 					break;
-				case "admin":
-					adminAuthorize(request, response, uriArr);
-					break;
+//				case "admin":
+//					if(member == null || !member.getGrade().equals("ADMIN")) {
+//						throw new HandleableException(ErrorCode.UNAUTHORIZED_PAGE);
+//					}break;
 				case "board":
 					boardAuthorize(request, response, uriArr);
 					break;
@@ -46,9 +49,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 		
 	private void boardAuthorize(HttpServletRequest httpRequest, HttpServletResponse httpResponse, String[] uriArr) {
 			
-		HttpSession session = httpRequest.getSession();
-		Member member = (Member) session.getAttribute("authentication");
-		
+		Member member = (Member) httpRequest.getSession().getAttribute("authentication");
 		
 		//비회원일 때 게시글 접근을 금지
 		switch (uriArr[2]) {
@@ -68,39 +69,6 @@ public class AuthInterceptor implements HandlerInterceptor {
 		
 	}
 
-	private void adminAuthorize(HttpServletRequest httpRequest, HttpServletResponse httpResponse, String[] uriArr) {
-		
-		Member member = (Member) httpRequest.getSession().getAttribute("authentication");
-		MemberGrade adminGrade = MemberGrade.valueOf(member.getGrade());
-		
-		//넘어온 인증정보가 관리자인지 사용자인지 판단
-		if(member == null || adminGrade == null) {
-			throw new HandleableException(ErrorCode.UNAUTHORIZED_PAGE);
-		}
-		
-		//super관리자는 통과
-		if(adminGrade.LEVEL.equals("super")) return;
-		
-		switch (uriArr[2]) {
-		case "member":
-			//회원과 관련된 관리를 수행하는 admin의 등급은 AD01
-			if(!adminGrade.LEVEL.equals("member")) {
-				throw new HandleableException(ErrorCode.UNAUTHORIZED_PAGE);
-			}
-			break;
-		case "board":
-			//게시판과 관련된 관리를 수행하는 admin의 등급은 AD02
-			if(!adminGrade.LEVEL.equals("board")) {
-				throw new HandleableException(ErrorCode.UNAUTHORIZED_PAGE);
-
-			}
-			break;
-		default:
-			break;
-		}
-		
-		
-	}
 
 	private void memberAuthorize(HttpServletRequest httpRequest, HttpServletResponse httpResponse, String[] uriArr) throws ServletException, IOException {
 

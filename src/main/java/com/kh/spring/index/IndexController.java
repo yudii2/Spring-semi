@@ -1,9 +1,20 @@
 package com.kh.spring.index;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.kh.spring.schedule.model.dto.Schedule;
+import com.kh.spring.schedule.model.service.ScheduleService;
+
+import lombok.RequiredArgsConstructor;
 
 @Controller
+@RequiredArgsConstructor
+@RequestMapping("/")
 public class IndexController {
 
 	// @Controller : 해당 클래스를 applicationContext의 bean으로 등록해준다.
@@ -33,14 +44,11 @@ public class IndexController {
 	// Servlet객체도 컨트롤러의 매개변수로 선언해 주입받을 수 있다.
 	// (HttpServletRequest, HttpServletResponse, HttpSession)
 	
-	@GetMapping("/")
-	public String index() {
-		//Controller 메서드의 return타입
-		//1. void : 해당 메서드가 호출된 url경로와 같은 위치의 jsp파일로 요청이 재지정
-		//			요청url이 /index/index 라면 -> jsp file : WEB-INF/views/index/index.jsp
-		//2. String : jsp파일의 위치를 지정 -> return "index/index 라면 -> jsp file : WEB-INF/views/index/index.jsp
-		//3. ModelAndView : Model객체 + view(jsp 위치)
+	private final ScheduleService scheduleService;
 		
+	@GetMapping("/")
+	public String index(Model model) {
+		model.addAttribute("schedules", scheduleService.selectAllSchedule());
 		return "index";
 	}
 	

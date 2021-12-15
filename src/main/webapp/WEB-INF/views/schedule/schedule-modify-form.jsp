@@ -68,7 +68,7 @@ $(function () {	//화면 로딩후 시작
 				<tr>
 					<td width="150" align="center">오픈 채팅방 링크</td>
 					<td align="center">
-						<input type="url" name="openChat" id="openChat" placeholder="https://open.kakao.com/" size="40" value="${schedule.openChat }">
+						<input type="url" name="openChat" id="openChat" placeholder="https://open.kakao.com/" size="40" value="${schedule.openchat }">
 					</td>
 				<tr height="50">
 					<td width="150" align="center">모집 연령대</td>

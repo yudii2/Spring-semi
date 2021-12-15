@@ -37,7 +37,7 @@
 
 		<!-- Preloader -->
 		<div class="preloader flex-column justify-content-center align-items-center">
-			<img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+			<img class="animation__shake" src="/resources/img/산행동행로고.jpg" alt="AdminLTELogo" height="60" width="60">
 		</div>
 
 		<!-- Navbar -->
@@ -45,10 +45,10 @@
 			<!-- Left navbar links -->
 			<ul class="navbar-nav">
 				<li class="nav-item"><a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a></li>
-				<li class="nav-item d-none d-sm-inline-block"><a href="/index" class="nav-link">Home</a></li>
+				<li class="nav-item d-none d-sm-inline-block"><a href="/" class="nav-link">Home</a></li>
 				<li class="nav-item d-none d-sm-inline-block"><a href="/mountain/search-seoul" class="nav-link">Mountain</a></li>
 				<li class="nav-item d-none d-sm-inline-block"><a href="/schedule/calendar" class="nav-link">Schedule</a></li>
-				<li class="nav-item d-none d-sm-inline-block"><a href="/board/board-page" class="nav-link">Board</a></li>
+				<li class="nav-item d-none d-sm-inline-block"><a href="/board/board" class="nav-link">Board</a></li>
 				
 			</ul>
 
@@ -62,7 +62,7 @@
 		<!-- Main Sidebar Container -->
 		<aside class="main-sidebar sidebar-dark-primary elevation-4">
 			<!-- Brand Logo -->
-			<a href="/admin/home" class="brand-link"> <img src="/resources/img/산행동행로고.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8"> <span class="brand-text font-weight-light" style="font-size: 18px; font-weight: 600">관리자 페이지</span>
+			<a href="/admin/admin" class="brand-link"> <img src="/resources/img/산행동행로고.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8"> <span class="brand-text font-weight-light" style="font-size: 18px; font-weight: 600">관리자 페이지</span>
 			</a>
 
 			<!-- Sidebar -->
@@ -71,7 +71,7 @@
 				<div class="user-panel mt-3 pb-3 mb-3 d-flex">
 
 					<div class="info">
-						<a href="/index">메인페이지로 이동하기</a>
+						<a href="/">메인페이지로 이동하기</a>
 					</div>
 				</div>
 
@@ -217,10 +217,10 @@
 													<td>${schedule.userId}</td>
 													<td>${schedule.regDate}</td>
 													<td>
-														<a href="/admin/approve-schedule?scIdx=${schedule.scIdx}">승인</a>
+														<a href="/admin/approve-schedule/${schedule.scIdx}">승인</a>
 													</td>
 													<td>
-														<a href="/admin/reject-schedule?scIdx=${schedule.scIdx}">거절</a>
+														<a href="/admin/reject-schedule/${schedule.scIdx}">거절</a>
 													</td>
 												</tr>
 											</c:forEach>

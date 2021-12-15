@@ -50,8 +50,6 @@ public class ScheduleController {
 		mapper.setDateFormat(DateFormat.getDateInstance(DateFormat.MEDIUM));
 		String scheduleJson = mapper.writeValueAsString(scheduleList);
 		
-		logger.debug(scheduleJson.toString());
-		
 		return scheduleJson;
 
 	}
@@ -59,17 +57,13 @@ public class ScheduleController {
 	@PostMapping(value = "schedule-detail",produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public String scheduleDetail(@RequestBody String json
-									,@SessionAttribute(value="authentication", required = false) Member member) throws JsonMappingException, JsonProcessingException {
+									,@SessionAttribute(value="authentication") Member member) throws JsonMappingException, JsonProcessingException {
 				
 		ObjectMapper mapper = new ObjectMapper();
 		Schedule scheduleObj = mapper.readValue(json, Schedule.class);
 		
 		Map<String,Object> schedule = new HashMap<String, Object>();
 		schedule = scheduleService.selectScheduleDetail(scheduleObj.getScIdx(),member);
-
-		logger.debug(schedule.get("schedule").toString());
-		logger.debug(schedule.get("participants").toString());
-		logger.debug(schedule.get("user").toString());
 			
 		return mapper.setDateFormat(DateFormat.getDateInstance(DateFormat.MEDIUM))
 				.writeValueAsString(schedule);
@@ -81,8 +75,17 @@ public class ScheduleController {
 									, Model model) {
 		
 		Schedule scheduleByIdx = (Schedule) scheduleService.selectScheduleDetail(schedule.getScIdx(), member).get("schedule");
-		logger.debug("schedule dDay : " + scheduleByIdx.getdDay());
 		model.addAttribute("schedule",scheduleByIdx);
+	}
+	
+	@PostMapping("upload")
+	public String upload(Schedule schedule, @SessionAttribute("authentication") Member member) {
+		schedule.setUserId(member.getUserId());
+		schedule.setNickName(member.getNickname());
+		schedule.setUserInfo(member.getInfo());
+		scheduleService.insertSchedule(schedule);
+		
+		return "redirect:/member/my-schedule";
 	}
 	
 

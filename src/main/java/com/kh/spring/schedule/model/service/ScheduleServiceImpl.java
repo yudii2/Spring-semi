@@ -37,4 +37,26 @@ public class ScheduleServiceImpl implements ScheduleService{
 		return Map.of("participants", participants, "schedule", scheduleByIdx,"user",member);
 	}
 
+	@Override
+	public void insertSchedule(Schedule schedule) {
+		scheduleRepository.insertSchedule(schedule);
+	}
+
+	@Override
+	public List<Schedule> selectNonApprovedSchdule() {
+		List<Schedule> schedules = new ArrayList<Schedule>();
+		schedules = scheduleRepository.selectNonApprovedSchedule();
+		return schedules;
+	}
+
+	@Override
+	public void approveSchedule(String scIdx) {
+		scheduleRepository.updateStatusForApprove(scIdx);
+	}
+
+	@Override
+	public void rejectSchedule(String scIdx) {
+		scheduleRepository.updateStatusForReject(scIdx);
+	}
+
 }

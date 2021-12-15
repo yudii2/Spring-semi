@@ -6,7 +6,7 @@ public enum ErrorCode {
 	FAILED_MAILING_ERROR("이메일 발송 중 에러가 발생하였습니다."),
 	HTTP_CONNECT_ERROR("HTTP통신 중 에러가 발생하였습니다."),
 	AUTHENTICATION_EXPIRED_ERROR("유효하지 않은 인증입니다."),
-	UNAUTHORIZED_PAGE("접근 권한이 없는 페이지입니다."),
+	UNAUTHORIZED_PAGE("접근 권한이 없는 페이지입니다.","/member/login"),
 	REDIRECT_TO_LOGIN_PAGE_NO_MSG("","/member/login"),		//HandleableException.java 오버로딩된 생성자
 	FAILED_FILE_UPLOAD_ERROR("파일업로드에 실패하였습니다.");
 	

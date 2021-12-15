@@ -24,7 +24,7 @@ public class ExceptionAdvice {
 	@ExceptionHandler(HandleableException.class)	//HandleableException(우리가 예외로 처리한 사례)에 대해서만 handler호출
 	public String handleableExceptionProcess(HandleableException e,Model model) {	//발생한 예외객체와 model객체 주입
 		model.addAttribute("msg",e.error.MSG);
-		model.addAttribute("usr",e.error.URL);
+		model.addAttribute("url",e.error.URL);
 		
 		return "common/result";
 	}

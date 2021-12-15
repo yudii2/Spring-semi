@@ -34,7 +34,7 @@
 
 		<!-- Preloader -->
 		<div class="preloader flex-column justify-content-center align-items-center">
-			<img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+			<img class="animation__shake" src="/resources/img/산행동행로고.jpg" alt="AdminLTELogo" height="60" width="60">
 		</div>
 
 		<!-- Navbar -->
@@ -59,7 +59,7 @@
 		<!-- Main Sidebar Container -->
 		<aside class="main-sidebar sidebar-dark-primary elevation-4">
 			<!-- Brand Logo -->
-			<a href="/admin/home" class="brand-link"> <img src="/resources/img/산행동행로고.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8"> <span class="brand-text font-weight-light" style="font-size: 18px; font-weight: 600">관리자 페이지</span>
+			<a href="/admin/admin" class="brand-link"> <img src="/resources/img/산행동행로고.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8"> <span class="brand-text font-weight-light" style="font-size: 18px; font-weight: 600">관리자 페이지</span>
 			</a>
 
 			<!-- Sidebar -->
@@ -68,7 +68,7 @@
 				<div class="user-panel mt-3 pb-3 mb-3 d-flex">
 
 					<div class="info">
-						<a href="/index">메인페이지로 이동하기</a>
+						<a href="/">메인페이지로 이동하기</a>
 					</div>
 				</div>
 

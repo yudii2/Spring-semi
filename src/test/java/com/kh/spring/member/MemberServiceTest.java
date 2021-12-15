@@ -30,4 +30,5 @@ public class MemberServiceTest {
 		
 		logger.debug("mathes : " + passwordEncoder.matches(password, encodedPassword));
 	}
+	
 }

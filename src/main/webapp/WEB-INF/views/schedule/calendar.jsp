@@ -51,7 +51,7 @@
 					<h2>인원수</h2>
 					<span id="allowedNum">${schedule.allowedNum}</span>
 					<h2>오픈채팅방 링크</h2>
-					<span id="openChat"> ${schedule.openChat}</span>
+					<span id="openChat"> ${schedule.openchat}</span>
 					<h2>모집 연령대</h2>
 					<span id="age">${schedule.age}</span>
 				</div>
@@ -147,22 +147,21 @@
     
 document.addEventListener('DOMContentLoaded', function() {
        
-       var schedule = [];
+       let schedule = [];
        // calendar-list를 ajax 요청으로 받아온다.
       $.ajax({
-            
             url:"/schedule/calendar-list", 
             type:"get",
             datatype:"json",
             contentType:"application/json; charset=utf-8",
             async:false,
             success:function(data){
-            	
+            	console.dir(data);
                 // data를 성공적으로 가져오면, schedule 배열에 object를 생성하여 push한다.
-                for (var i = 0; i < data.length; i++){
-                   var object = {
+                for (let i = 0; i < data.length; i++){
+                   let object = {
                          'title' : data[i].mountainName,   // title : 산이름
-                         'start' :data[i].dday,   // start : 날짜
+                         'start' :data[i].dDay,   // start : 날짜
                          'id' : data[i].scIdx   // id : schedule id
                    };
                    schedule.push(object);
@@ -212,29 +211,27 @@ document.addEventListener('DOMContentLoaded', function() {
                          var sh = json.schedule;
                          var pa = json.participants; 
                          if(sh){
-                        	 console.dir(sh);
                             // 받아온 schedule 정보를 모달에 등록한다.
 	                         $('#tit_schedule').text(sh.mountainName);
 	                         $('#tit_content').text(sh.info);
-	                         $('#dDay').text(sh.dday);
+	                         $('#dDay').text(sh.dDay);
 	                         $('#mointainName').text(sh.mountainName);
 	                         $('#allowedNum').text(sh.allowedNum);
-	                         $('#openChat').text(sh.openChat);
+	                         $('#openChat').text(sh.openchat);
 	                         $('#age').text(sh.age + '대');
                          
-                           
                          
                             // 참가동행자가 있을 경우 화면에 표시
                             if(pa){
 
-                               var top = '';
-                               var bottom = '';
+                               let top = '';
+                               let bottom = '';
                                
-                               for (var i = 0; i < pa.length; i++) {
+                               for (let i = 0; i < pa.length; i++) {
 		
 		                           //클래스 <div class="desc_user"> 추가
 		                           console.dir(pa[i]);
-		                           if(pa[i].PROFILE == 'undefined' || pa[i].PROFILE == 'null' ){											/* onerror="onErrorImage(this) */
+		                           if(!pa[i].PROFILE || pa[i].PROFILE == 'undefined' || pa[i].PROFILE == null ){											/* onerror="onErrorImage(this) */
 		                               top += ' <div class="parti partii"><img src="/resources/img/user.png" alt="/resources/img/user.png"><span>'+ pa[i].NICKNAME + '</span></div>'
 		                               bottom += '<div class="desc_user desc_uuser"><img src="/resources/img/user.png" alt="/resources/img/user.png"><div class="info"><h1>'+pa[i].NICKNAME+'</h1><span>'+pa[i].INFO+'</span></div></div>';
 		
